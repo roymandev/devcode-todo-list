@@ -11,6 +11,14 @@ module.exports = {
       fontFamily: {
         sans: ['Poppins', ...defaultTheme.fontFamily.sans],
       },
+      backgroundColor: {
+        primary: '#16ABF8',
+        secondary: '#F4F4F4',
+      },
+      textColor: {
+        primary: '#111111',
+        secondary: '#888888',
+      },
     },
   },
   plugins: [],

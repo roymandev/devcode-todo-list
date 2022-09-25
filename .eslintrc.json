@@ -31,6 +31,12 @@
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "import/prefer-default-export": "off",
-    "react-hooks/exhaustive-deps": "off"
+    "react-hooks/exhaustive-deps": "off",
+    "tailwindcss/no-custom-classname": [
+      "error",
+      {
+        "config": "tailwind.config.cjs"
+      }
+    ]
   }
 }
