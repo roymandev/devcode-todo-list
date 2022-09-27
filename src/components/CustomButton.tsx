@@ -1,11 +1,25 @@
 import twclsx from '@/lib/twclsx';
 
-export type CustomButtonProps = React.ComponentPropsWithoutRef<'button'>;
+export interface CustomButtonProps
+  extends React.ComponentPropsWithoutRef<'button'> {
+  color?: keyof typeof colorsClass;
+}
 
-const CustomButton = ({ className, ...rest }: CustomButtonProps) => (
+export const colorsClass = {
+  primary: 'bg-primary text-white',
+  secondary: 'bg-secondary text-secondary',
+  red: 'bg-danger text-white',
+};
+
+const CustomButton = ({
+  className,
+  color = 'primary',
+  ...rest
+}: CustomButtonProps) => (
   <button
     className={twclsx(
-      'bg-primary flex h-[54px] items-center gap-[6px] rounded-full px-7 font-semibold text-white',
+      'flex h-[54px] items-center gap-[6px] rounded-full px-7 font-semibold',
+      colorsClass[color],
       className,
     )}
     {...rest}
