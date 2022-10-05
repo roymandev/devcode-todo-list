@@ -18,7 +18,7 @@ const CustomButton = ({
 }: CustomButtonProps) => (
   <button
     className={twclsx(
-      'flex h-[54px] items-center gap-[6px] rounded-full px-7 font-semibold',
+      'flex h-[54px] items-center gap-[6px] rounded-full px-7 font-semibold hover:opacity-70',
       colorsClass[color],
       className,
     )}
