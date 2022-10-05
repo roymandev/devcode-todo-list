@@ -19,6 +19,7 @@ module.exports = {
       textColor: {
         primary: '#111111',
         secondary: '#4A4A4A',
+        dimmed: '#888888',
       },
     },
   },
