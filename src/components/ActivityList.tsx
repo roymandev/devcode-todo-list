@@ -1,13 +1,18 @@
 import Activity from '@/components/Activity';
-import { atomActivityList } from '@/stores/activityStore';
-import { useAtomValue } from 'jotai';
+import { atomActivityList, atomCreateActivity } from '@/stores/activityStore';
+import { useAtomValue, useSetAtom } from 'jotai';
 
 const ActivityList = () => {
   const activities = useAtomValue(atomActivityList);
+  const createActivity = useSetAtom(atomCreateActivity);
 
   if (!activities.length)
     return (
-      <button className="mx-auto" data-cy="activity-empty-state">
+      <button
+        data-cy="activity-empty-state"
+        className="mx-auto"
+        onClick={createActivity}
+      >
         <img src="/activity-empty-state.png" alt="No activity" />
       </button>
     );
