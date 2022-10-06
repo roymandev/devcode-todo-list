@@ -1,16 +1,30 @@
 import TrashIcon from '@/components/icons/TrashIcon';
 import { formatDate } from '@/lib/formatDate';
-import { Activity as ActivityProps } from '@/stores/activityStore';
+import { Activity as ActivityType } from '@/stores/activityStore';
 
-const Activity = ({ title, updated_at, created_at }: ActivityProps) => (
-  <button className="flex h-60 flex-col rounded-xl bg-white p-6 text-left shadow-lg">
-    <h3 className="text-lg font-bold">{title}</h3>
+interface ActivityProps extends ActivityType {
+  index: number;
+}
+
+const Activity = ({ title, updated_at, created_at, index }: ActivityProps) => (
+  <button
+    data-cy={'activity-item-' + index}
+    className="flex h-60 flex-col rounded-xl bg-white p-6 text-left shadow-lg"
+  >
+    <h3 data-cy="activity-item-title" className="text-lg font-bold">
+      {title}
+    </h3>
 
     <div className="mt-auto flex items-center">
-      <span className="text-dimmed text-sm font-medium">
+      <span
+        data-cy="activity-item-date"
+        className="text-dimmed text-sm font-medium"
+      >
         {formatDate(updated_at || created_at)}
       </span>
-      <TrashIcon className="ml-auto" />
+      <button data-cy="activity-item-delete-button" className="ml-auto">
+        <TrashIcon />
+      </button>
     </div>
   </button>
 );
