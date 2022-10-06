@@ -54,3 +54,19 @@ export const atomCreateActivity = atom(null, async (get, set) => {
 
   throw Error('Failed to create new activity');
 });
+
+export const atomDeleteActivity = atom(null, async (get, set, id: number) => {
+  const [res] = await promiseHanlder(
+    fetch(API_BASE_URL + API_ACTIVITY_PATH + '/' + id, {
+      method: 'DELETE',
+      redirect: 'follow',
+    }),
+  );
+  if (res?.ok) {
+    set(atomActivityList, (activities) =>
+      activities.filter((activity) => activity.id !== id),
+    );
+  }
+
+  throw Error('Failed to delete activity with id ' + id);
+});
