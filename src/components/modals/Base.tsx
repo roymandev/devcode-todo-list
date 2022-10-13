@@ -6,11 +6,16 @@ export interface BaseModalProps {
   onClose: () => void;
 }
 
-const Base = ({ show, children }: BaseModalProps) => {
+const Base = ({ show, children, onClose }: BaseModalProps) => {
   if (!show) return null;
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 flex flex-col items-center bg-black/30">
+    <div
+      className="fixed inset-0 flex flex-col items-center bg-black/30"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       {children}
     </div>,
     document.getElementById('root') as HTMLElement,
