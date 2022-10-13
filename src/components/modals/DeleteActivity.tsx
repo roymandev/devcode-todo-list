@@ -21,15 +21,21 @@ const DeleteActivity = ({
   return (
     <Base onClose={onClose} {...rest}>
       {isDelete ? (
-        <div className="mt-48 flex w-full max-w-lg items-center gap-3 rounded-xl bg-white px-7 py-4 text-sm shadow-md">
-          <InformationIcon />
-          Activity berhasil dihapus
+        <div
+          data-cy="modal-information"
+          className="mt-48 flex w-full max-w-lg items-center gap-3 rounded-xl bg-white px-7 py-4 text-sm shadow-md"
+        >
+          <InformationIcon data-cy="modal-information-icon" />
+          <p data-cy="modal-information-title">Activity berhasil dihapus</p>
         </div>
       ) : (
-        <div className="my-auto flex w-full max-w-lg flex-col items-center rounded-xl bg-white p-10 text-lg shadow-md">
-          <WarningIcon />
+        <div
+          data-cy="modal-delete"
+          className="my-auto flex w-full max-w-lg flex-col items-center rounded-xl bg-white p-10 text-lg shadow-md"
+        >
+          <WarningIcon data-cy="modal-delete-icon" />
 
-          <p className="mt-8 mb-11 text-center">
+          <p data-cy="modal-delete-title" className="mt-8 mb-11 text-center">
             Apakah anda yakin menghapus activity
             <br />
             <b>“{activity.title}”?</b>
@@ -37,6 +43,7 @@ const DeleteActivity = ({
 
           <div className="flex gap-5">
             <CustomButton
+              data-cy="modal-delete-cancel-button"
               color="secondary"
               className="w-36 justify-center"
               onClick={onClose}
@@ -44,6 +51,7 @@ const DeleteActivity = ({
               Batal
             </CustomButton>
             <CustomButton
+              data-cy="modal-delete-confirm-button"
               color="red"
               className="w-36 justify-center"
               onClick={() =>
