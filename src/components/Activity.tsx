@@ -1,13 +1,11 @@
 import TrashIcon from '@/components/icons/TrashIcon';
 import { formatDate } from '@/lib/formatDate';
-import {
-  Activity as ActivityType,
-  atomDeleteActivity,
-} from '@/stores/activityStore';
-import { useSetAtom } from 'jotai';
+import { Activity as ActivityType } from '@/stores/activityStore';
+import { Link } from 'react-router-dom';
 
 interface ActivityProps extends ActivityType {
   index: number;
+  onDelete: () => void;
 }
 
 const Activity = ({
@@ -16,11 +14,11 @@ const Activity = ({
   updated_at,
   created_at,
   index,
+  onDelete,
 }: ActivityProps) => {
-  const deleteActivity = useSetAtom(atomDeleteActivity);
-
   return (
-    <button
+    <Link
+      to={'/detail/' + id}
       data-cy={'activity-item-' + index}
       className="flex h-60 flex-col rounded-xl bg-white p-6 text-left shadow-lg"
     >
@@ -38,12 +36,15 @@ const Activity = ({
         <button
           data-cy="activity-item-delete-button"
           className="ml-auto"
-          onClick={() => deleteActivity(id)}
+          onClick={(e) => {
+            e.preventDefault();
+            onDelete();
+          }}
         >
           <TrashIcon />
         </button>
       </div>
-    </button>
+    </Link>
   );
 };
 
