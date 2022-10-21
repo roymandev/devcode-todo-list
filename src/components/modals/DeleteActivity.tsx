@@ -2,20 +2,20 @@ import CustomButton from '@/components/CustomButton';
 import InformationIcon from '@/components/icons/InformationIcon';
 import WarningIcon from '@/components/icons/WarningIcon';
 import Base, { BaseModalProps } from '@/components/modals/Base';
-import { Activity, atomDeleteActivity } from '@/stores/activityStore';
-import { useSetAtom } from 'jotai';
+import { Activity } from '@/stores/activityStore';
 import { useState } from 'react';
 
 export interface DeleteActivityProps extends BaseModalProps {
   activity: Activity;
+  onDelete: (activityId: Activity['id']) => Promise<void>;
 }
 
 const DeleteActivity = ({
   activity,
   onClose,
+  onDelete,
   ...rest
 }: DeleteActivityProps) => {
-  const deleteActivity = useSetAtom(atomDeleteActivity);
   const [isDelete, setIsDelete] = useState(false);
 
   return (
@@ -55,7 +55,7 @@ const DeleteActivity = ({
               color="red"
               className="w-36 justify-center"
               onClick={() =>
-                deleteActivity(activity.id).finally(() => {
+                onDelete(activity.id).finally(() => {
                   setIsDelete(true);
 
                   setTimeout(() => {
