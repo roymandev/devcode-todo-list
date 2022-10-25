@@ -1,19 +1,13 @@
 import Activity from '@/components/Activity';
-import {
-  Activity as ActivityType,
-  atomActivityList,
-  atomCreateActivity,
-} from '@/stores/activityStore';
-import { useAtomValue, useSetAtom } from 'jotai';
+import { Activity as ActivityType } from '@/stores/activityStore';
 import ModalDeleteActivity from '@/components/modals/DeleteActivity';
 import { useState } from 'react';
+import useActivity from '@/hooks/useActivity';
 
 const ActivityList = () => {
-  const activities = useAtomValue(atomActivityList);
-  const createActivity = useSetAtom(atomCreateActivity);
-  const [deleteActivity, setDeleteActivity] = useState<ActivityType | null>(
-    null,
-  );
+  const { activities, createActivity, deleteActivity } = useActivity();
+  const [deleteActivityData, setDeleteActivityData] =
+    useState<ActivityType | null>(null);
 
   return (
     <>
@@ -23,7 +17,7 @@ const ActivityList = () => {
             <Activity
               index={index}
               key={activity.id}
-              onDelete={() => setDeleteActivity(activity)}
+              onDelete={() => setDeleteActivityData(activity)}
               {...activity}
             />
           ))}
@@ -38,11 +32,12 @@ const ActivityList = () => {
         </button>
       )}
 
-      {deleteActivity && (
+      {deleteActivityData && (
         <ModalDeleteActivity
-          show={!!deleteActivity}
-          activity={deleteActivity}
-          onClose={() => setDeleteActivity(null)}
+          show={!!deleteActivityData}
+          activity={deleteActivityData}
+          onDelete={deleteActivity}
+          onClose={() => setDeleteActivityData(null)}
         />
       )}
     </>

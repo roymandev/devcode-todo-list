@@ -2,16 +2,11 @@ import ActivityList from '@/components/ActivityList';
 import CustomButton from '@/components/CustomButton';
 import Header from '@/components/Header';
 import PlusIcon from '@/components/icons/PlusIcon';
-import {
-  atomCreateActivity,
-  atomFetchAllActivity,
-} from '@/stores/activityStore';
-import { useSetAtom } from 'jotai';
+import useActivity from '@/hooks/useActivity';
 import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
-  const fetchActivities = useSetAtom(atomFetchAllActivity);
-  const createActivity = useSetAtom(atomCreateActivity);
+  const { fetchActivities, createActivity } = useActivity();
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
