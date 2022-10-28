@@ -21,6 +21,9 @@ module.exports = {
         secondary: '#4A4A4A',
         dimmed: '#888888',
       },
+      borderColor: {
+        primary: '#e5e5e5',
+      },
     },
   },
   plugins: [],
