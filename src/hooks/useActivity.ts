@@ -93,6 +93,32 @@ const useActivity = () => {
     throw Error('Failed to get activity with id ' + activityId);
   };
 
+  const updateActivity = async (
+    activityId: Activity['id'],
+    updateData: Pick<Activity, 'title'>,
+  ) => {
+    const [res] = await promiseHanlder(
+      fetch(API_BASE_URL + API_ACTIVITY_PATH + '/' + activityId, {
+        method: 'PATCH',
+        body: JSON.stringify(updateData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
+    );
+
+    if (res?.ok) {
+      setActivities((activities) =>
+        activities.map((activity) =>
+          activity.id == activityId ? { ...activity, ...updateData } : activity,
+        ),
+      );
+      return;
+    }
+
+    throw Error('Failed to update activity with id ' + activityId);
+  };
+
   return {
     activities,
     setActivities,
@@ -100,6 +126,7 @@ const useActivity = () => {
     createActivity,
     deleteActivity,
     fetchActivity,
+    updateActivity,
   };
 };
 
