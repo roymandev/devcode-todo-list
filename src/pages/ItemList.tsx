@@ -4,8 +4,11 @@ import CaretLeftIcon from '@/components/icons/CaretLeftIcon';
 import PlusIcon from '@/components/icons/PlusIcon';
 import ItemSortButton, { ITEM_SORT_TYPE } from '@/components/ItemSortButton';
 import ItemTitle from '@/components/ItemTitle';
+import CreateTodo from '@/components/modals/CreateTodo';
 import useActivity from '@/hooks/useActivity';
+import useTodo from '@/hooks/useTodo';
 import { Activity } from '@/store';
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
@@ -14,6 +17,8 @@ const ItemList = () => {
   const { activities, fetchActivity, updateActivity } = useActivity();
   const [activity, setActivity] = useState<Activity | null>(null);
   const [itemSort, setItemSort] = useState<ITEM_SORT_TYPE>('latest');
+  const [openModal, setOpenModal] = useState(false);
+  const { todos, createTodo } = useTodo();
 
   useEffect(() => {
     if (activityIdParam) {
@@ -49,9 +54,15 @@ const ItemList = () => {
                 }}
               />
 
-              <ItemSortButton sort={itemSort} setSort={setItemSort} />
+              {!!todos.length && (
+                <ItemSortButton sort={itemSort} setSort={setItemSort} />
+              )}
 
-              <CustomButton data-cy="todo-add-button">
+              <CustomButton
+                data-cy="todo-add-button"
+                className={clsx(!todos.length && 'ml-auto')}
+                onClick={() => setOpenModal(true)}
+              >
                 <PlusIcon />
                 Tambah
               </CustomButton>
@@ -59,6 +70,14 @@ const ItemList = () => {
           )}
         </div>
       </main>
+
+      <CreateTodo
+        show={openModal}
+        onClose={() => setOpenModal(false)}
+        onSave={(title, priority) => {
+          if (activity) createTodo(activity.id, title, priority);
+        }}
+      />
     </>
   );
 };
