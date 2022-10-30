@@ -108,11 +108,15 @@ const useActivity = () => {
     );
 
     if (res?.ok) {
-      setActivities((activities) =>
-        activities.map((activity) =>
-          activity.id == activityId ? { ...activity, ...updateData } : activity,
-        ),
-      );
+      const [resJson] = await promiseHanlder<Activity>(res.json());
+
+      if (resJson) {
+        setActivities((activities) =>
+          activities.map((activity) =>
+            activity.id == activityId ? { ...activity, ...resJson } : activity,
+          ),
+        );
+      }
       return;
     }
 
