@@ -2,7 +2,7 @@ import CustomButton from '@/components/CustomButton';
 import InformationIcon from '@/components/icons/InformationIcon';
 import WarningIcon from '@/components/icons/WarningIcon';
 import Base, { BaseModalProps } from '@/components/modals/Base';
-import { Activity } from '@/stores/activityStore';
+import { Activity } from '@/store';
 import { useState } from 'react';
 
 export interface DeleteActivityProps extends BaseModalProps {

@@ -1,5 +1,5 @@
 import Activity from '@/components/Activity';
-import { Activity as ActivityType } from '@/stores/activityStore';
+import { Activity as ActivityType } from '@/store';
 import ModalDeleteActivity from '@/components/modals/DeleteActivity';
 import { useState } from 'react';
 import useActivity from '@/hooks/useActivity';

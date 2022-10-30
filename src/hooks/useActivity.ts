@@ -1,6 +1,6 @@
 import { API_ACTIVITY_PATH, API_BASE_URL, API_EMAIL_ENV } from '@/constant';
 import { promiseHanlder } from '@/lib/promiseHandler';
-import { Activity, atomActivityList } from '@/stores/activityStore';
+import { Activity, atomActivityList } from '@/store';
 import { useAtom } from 'jotai';
 
 const useActivity = () => {

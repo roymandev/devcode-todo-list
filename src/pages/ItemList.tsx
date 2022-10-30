@@ -5,7 +5,7 @@ import PlusIcon from '@/components/icons/PlusIcon';
 import ItemSortButton, { ITEM_SORT_TYPE } from '@/components/ItemSortButton';
 import ItemTitle from '@/components/ItemTitle';
 import useActivity from '@/hooks/useActivity';
-import { Activity } from '@/stores/activityStore';
+import { Activity } from '@/store';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 

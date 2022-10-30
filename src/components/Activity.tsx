@@ -1,6 +1,6 @@
 import TrashIcon from '@/components/icons/TrashIcon';
 import { formatDate } from '@/lib/formatDate';
-import { Activity as ActivityType } from '@/stores/activityStore';
+import { Activity as ActivityType } from '@/store';
 import { Link } from 'react-router-dom';
 
 interface ActivityProps extends ActivityType {
