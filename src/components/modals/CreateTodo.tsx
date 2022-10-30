@@ -100,6 +100,7 @@ const CreateTodo = ({ onClose, onSave, ...props }: CreateTodoProps) => {
             <div>
               <button
                 id={formId + 'priority'}
+                type="button"
                 className={twclsx(
                   'border-primary flex h-[52px] w-52 items-center gap-4 rounded-md border py-4 px-5',
                   openSelector && 'rounded-b-none bg-secondary',
