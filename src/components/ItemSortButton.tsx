@@ -17,32 +17,32 @@ export interface ItemSortButtonProps {
 const itemSortType: {
   value: ITEM_SORT_TYPE;
   text: string;
-  icon: React.FunctionComponent;
+  icon: React.ReactNode;
 }[] = [
   {
     value: 'latest',
     text: 'Terbaru',
-    icon: SortLatestIcon,
+    icon: <SortLatestIcon />,
   },
   {
     value: 'oldest',
     text: 'Terlama',
-    icon: SortOldestIcon,
+    icon: <SortOldestIcon />,
   },
   {
     value: 'az',
     text: 'A-Z',
-    icon: SortAtoZIcon,
+    icon: <SortAtoZIcon />,
   },
   {
     value: 'za',
     text: 'Z-A',
-    icon: SortZtoAIcon,
+    icon: <SortZtoAIcon />,
   },
   {
     value: 'unfinished',
     text: 'Belum Selesai',
-    icon: SortAltIcon,
+    icon: <SortAltIcon />,
   },
 ];
 

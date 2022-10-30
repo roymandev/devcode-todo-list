@@ -8,7 +8,7 @@ export interface CustomDropdownProps<T = string> {
   items: {
     value: T;
     text: string;
-    icon: React.FunctionComponent;
+    icon: React.ReactNode;
   }[];
   onSelect: (item: T) => void;
 }
@@ -37,7 +37,7 @@ const CustomSelector = <T,>({
             )}
             onClick={() => onSelect(item.value)}
           >
-            <item.icon />
+            {item.icon}
             {item.text}
             {item.value === value && <CheckIcon className="ml-auto" />}
           </button>
