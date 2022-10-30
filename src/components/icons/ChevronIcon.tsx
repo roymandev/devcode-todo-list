@@ -1,11 +1,13 @@
 import { SVGProps } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+type Direction = 'top' | 'bottom' | 'left' | 'right';
+
 export interface ChevronIconProps extends SVGProps<SVGSVGElement> {
-  direction: 'top' | 'bottom' | 'left' | 'right';
+  direction?: Direction;
 }
 
-const directionClass: Record<ChevronIconProps['direction'], string> = {
+const directionClass: Record<Direction, string> = {
   top: 'rotate-180',
   left: 'rotate-90',
   right: '-rotate-90',
