@@ -11,7 +11,7 @@ const Base = ({ show, children, onClose }: BaseModalProps) => {
 
   return ReactDOM.createPortal(
     <div
-      className="fixed inset-0 flex flex-col items-center bg-black/30"
+      className="fixed inset-0 z-50 flex flex-col items-center bg-black/30"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
