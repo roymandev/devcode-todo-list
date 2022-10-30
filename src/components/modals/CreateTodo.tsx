@@ -81,7 +81,7 @@ const CreateTodo = ({ onClose, onSave, ...props }: CreateTodoProps) => {
               Nama List Item
             </label>
             <input
-              className="border-primary mb-6 h-[52px] rounded-md border py-[14px] px-[18px]"
+              className="border-primary mb-6 h-[52px] rounded-md border py-[14px] px-[18px] outline-none focus:border-[#16ABF8]"
               type="text"
               placeholder="Tambahkan nama list item"
               required
