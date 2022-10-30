@@ -23,6 +23,8 @@ module.exports = {
       },
       borderColor: {
         primary: '#e5e5e5',
+        secondary: '#C7C7C7',
+        blue: '#16ABF8',
       },
     },
   },
