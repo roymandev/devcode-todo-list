@@ -6,9 +6,10 @@ import PriorityIcon from '@/components/icons/PriorityIcon';
 import Base, { BaseModalProps } from '@/components/modals/Base';
 import { Todo } from '@/hooks/useTodo';
 import twclsx from '@/lib/twclsx';
-import { useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 
-export interface CreateTodoProps extends Omit<BaseModalProps, 'children'> {
+export interface TodoEditorProps extends Omit<BaseModalProps, 'children'> {
+  todo?: Todo;
   onSave: (title: Todo['title'], priority: Todo['priority']) => void;
 }
 
@@ -44,7 +45,7 @@ const selectorItems: {
   },
 ];
 
-const CreateTodo = ({ onClose, onSave, ...props }: CreateTodoProps) => {
+const TodoEditor = ({ todo, onClose, onSave, ...props }: TodoEditorProps) => {
   const formId = useId();
   const [openSelector, setOpenSelector] = useState(false);
 
@@ -54,11 +55,18 @@ const CreateTodo = ({ onClose, onSave, ...props }: CreateTodoProps) => {
   const getSelectedPriority = () =>
     selectorItems.find((item) => item.value === priority);
 
+  useEffect(() => {
+    if (todo) {
+      setTitle(todo.title);
+      setPriority(todo.priority);
+    }
+  }, [todo]);
+
   return (
     <Base onClose={onClose} {...props}>
       <article className="my-auto w-full max-w-[830px] rounded-xl bg-white shadow-md">
         <header className="border-primary flex h-[70px] items-center border-b px-[30px] text-lg font-semibold">
-          <h3>Tambah List Item</h3>
+          <h3>{todo ? 'Edit Item' : 'Tambah List Item'}</h3>
 
           <button className="ml-auto" onClick={onClose}>
             <CloseIcon />
@@ -112,7 +120,9 @@ const CreateTodo = ({ onClose, onSave, ...props }: CreateTodoProps) => {
                     type={getSelectedPriority()?.value || 'very-high'}
                   />
                 )}
-                {openSelector ? 'Pilih Priority' : getSelectedPriority()?.text}
+                {openSelector
+                  ? 'Pilih Priority'
+                  : getSelectedPriority()?.text || 'Very High'}
                 <ChevronIcon
                   direction={openSelector ? 'top' : 'bottom'}
                   className="ml-auto"
@@ -145,4 +155,4 @@ const CreateTodo = ({ onClose, onSave, ...props }: CreateTodoProps) => {
   );
 };
 
-export default CreateTodo;
+export default TodoEditor;
