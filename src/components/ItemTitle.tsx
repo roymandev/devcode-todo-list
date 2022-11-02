@@ -18,6 +18,11 @@ const ItemTitle = ({ title: initialTitle, onChange }: ItemTitleProps) => {
     }
   }, [onEditTitle]);
 
+  const onSaveHanlder = () => {
+    setOnEditTitle(false);
+    if (initialTitle !== title) onChange(title);
+  };
+
   return (
     <>
       <input
@@ -31,14 +36,18 @@ const ItemTitle = ({ title: initialTitle, onChange }: ItemTitleProps) => {
         onChange={(e) => {
           setTitle(e.target.value);
         }}
-        onBlur={() => {
-          setOnEditTitle(false);
-          if (initialTitle !== title) onChange(title);
+        onBlur={onSaveHanlder}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            onSaveHanlder();
+          }
         }}
       />
       <h1
         data-cy="todo-title"
         className={twclsx('text-4xl font-bold', onEditTitle && 'hidden')}
+        onClick={() => setOnEditTitle(true)}
       >
         {title}
       </h1>
