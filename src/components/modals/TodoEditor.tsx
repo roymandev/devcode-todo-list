@@ -162,7 +162,8 @@ const TodoEditor = ({ todo, onClose, onSave, ...props }: TodoEditorProps) => {
             <CustomButton
               data-cy="modal-add-save-button"
               type="submit"
-              className="ml-auto w-40 justify-center"
+              className="ml-auto w-40 justify-center disabled:opacity-20"
+              disabled={!title}
             >
               Simpan
             </CustomButton>
