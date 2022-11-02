@@ -1,5 +1,6 @@
 import CheckAltIcon from '@/components/icons/CheckAltIcon';
 import PencilIcon from '@/components/icons/PencilIcon';
+import PriorityIcon from '@/components/icons/PriorityIcon';
 import TrashIcon from '@/components/icons/TrashIcon';
 import DeleteTodo from '@/components/modals/DeleteTodo';
 import { Todo } from '@/hooks/useTodo';
@@ -42,6 +43,8 @@ const TodoList = ({
               >
                 {!todo.is_active && <CheckAltIcon />}
               </span>
+
+              <PriorityIcon className="h-[9px] w-[9px]" type={todo.priority} />
 
               <h3
                 className={clsx(!todo.is_active && 'text-dimmed line-through')}
