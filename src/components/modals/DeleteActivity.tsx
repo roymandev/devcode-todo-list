@@ -18,8 +18,13 @@ const DeleteActivity = ({
 }: DeleteActivityProps) => {
   const [isDelete, setIsDelete] = useState(false);
 
+  const onCloseHanlder = () => {
+    setIsDelete(false);
+    onClose();
+  };
+
   return (
-    <Base onClose={onClose} {...rest}>
+    <Base onClose={onCloseHanlder} {...rest}>
       {isDelete ? (
         <div
           data-cy="modal-information"
@@ -46,7 +51,7 @@ const DeleteActivity = ({
               data-cy="modal-delete-cancel-button"
               color="secondary"
               className="w-36 justify-center"
-              onClick={onClose}
+              onClick={onCloseHanlder}
             >
               Batal
             </CustomButton>
@@ -55,14 +60,7 @@ const DeleteActivity = ({
               color="red"
               className="w-36 justify-center"
               onClick={() =>
-                onDelete(activity.id).finally(() => {
-                  setIsDelete(true);
-
-                  setTimeout(() => {
-                    setIsDelete(false);
-                    onClose();
-                  }, 1000);
-                })
+                onDelete(activity.id).finally(() => setIsDelete(true))
               }
             >
               Hapus
