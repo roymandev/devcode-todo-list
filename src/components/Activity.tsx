@@ -4,7 +4,6 @@ import { Activity as ActivityType } from '@/store';
 import { Link } from 'react-router-dom';
 
 interface ActivityProps extends ActivityType {
-  index: number;
   onDelete: () => void;
 }
 
@@ -13,13 +12,12 @@ const Activity = ({
   title,
   updated_at,
   created_at,
-  index,
   onDelete,
 }: ActivityProps) => {
   return (
     <Link
       to={'/detail/' + id}
-      data-cy={'activity-item-' + index}
+      data-cy="activity-item"
       className="flex h-60 flex-col rounded-xl bg-white p-6 text-left shadow-lg"
     >
       <h3 data-cy="activity-item-title" className="text-lg font-bold">

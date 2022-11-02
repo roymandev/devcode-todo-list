@@ -29,9 +29,9 @@ const TodoList = ({
     <>
       {todos.length ? (
         <div className="mt-12 flex flex-col gap-[10px]">
-          {todos.map((todo, index) => (
+          {todos.map((todo) => (
             <div
-              data-cy={'todo-item-' + index}
+              data-cy="todo-item"
               key={todo.id}
               className="flex h-20 items-center gap-4 rounded-xl bg-white px-7 text-lg font-medium shadow-lg"
             >

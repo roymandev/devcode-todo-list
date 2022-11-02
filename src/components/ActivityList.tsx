@@ -13,9 +13,8 @@ const ActivityList = () => {
     <>
       {activities.length ? (
         <div className="grid grid-cols-4 gap-5">
-          {activities.map((activity, index) => (
+          {activities.map((activity) => (
             <Activity
-              index={index}
               key={activity.id}
               onDelete={() => setDeleteActivityData(activity)}
               {...activity}
