@@ -87,8 +87,11 @@ const useTodo = () => {
 
       if (resJson) {
         setTodos((todos) =>
-          todos.map((todo) =>
-            todo.id == todoId ? { ...todo, ...resJson } : todo,
+          sortTodos(
+            sortType,
+            todos.map((todo) =>
+              todo.id == todoId ? { ...todo, ...resJson } : todo,
+            ),
           ),
         );
       }
