@@ -34,14 +34,7 @@ const useActivity = () => {
       }),
     );
 
-    if (res?.ok) {
-      const [resJson] = await promiseHanlder<Activity>(res.json());
-
-      if (resJson) {
-        setActivities((activities) => [resJson, ...activities]);
-        return;
-      }
-    }
+    if (res?.ok) fetchActivities();
 
     throw Error('Failed to create new activity');
   };
