@@ -1,7 +1,9 @@
 import { Todo } from '@/hooks/useTodo';
+import twclsx from '@/lib/twclsx';
 
 export interface PriorityIconProps {
   type: Todo['priority'];
+  className?: string;
 }
 
 const iconColors: Record<PriorityIconProps['type'], string> = {
@@ -12,10 +14,10 @@ const iconColors: Record<PriorityIconProps['type'], string> = {
   'very-low': '#8942C1',
 };
 
-const PriorityIcon = ({ type }: PriorityIconProps) => {
+const PriorityIcon = ({ type, className }: PriorityIconProps) => {
   return (
     <span
-      className="h-[14px] w-[14px] rounded-full"
+      className={twclsx('h-[14px] w-[14px] rounded-full', className)}
       style={{ background: iconColors[type] }}
     />
   );
