@@ -11,6 +11,8 @@ export interface CustomDropdownProps<T = string> {
     icon: React.ReactNode;
   }[];
   onSelect: (item: T) => void;
+  itemDataCyPrefix: string;
+  dataCy: string;
 }
 
 const CustomSelector = <T,>({
@@ -19,9 +21,12 @@ const CustomSelector = <T,>({
   className,
   itemClassName,
   onSelect,
+  itemDataCyPrefix,
+  dataCy,
 }: CustomDropdownProps<T>) => {
   return (
     <div
+      data-cy={dataCy}
       className={twclsx(
         'divide-primary absolute mt-1 divide-y rounded-md bg-white',
         className,
@@ -30,6 +35,7 @@ const CustomSelector = <T,>({
       {items.map((item) => {
         return (
           <button
+            data-cy={itemDataCyPrefix + item.value}
             key={item.text}
             className={twclsx(
               'flex h-[52px] w-56 items-center gap-4 py-4 px-5',

@@ -69,6 +69,8 @@ const ItemSortButton = ({ sort, setSort }: ItemSortButtonProps) => {
           }}
           items={itemSortType}
           className="shadow-lg"
+          dataCy="sort-parent"
+          itemDataCyPrefix="sort-"
         />
       )}
     </div>

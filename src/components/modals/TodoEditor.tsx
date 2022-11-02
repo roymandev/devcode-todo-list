@@ -64,11 +64,20 @@ const TodoEditor = ({ todo, onClose, onSave, ...props }: TodoEditorProps) => {
 
   return (
     <Base onClose={onClose} {...props}>
-      <article className="my-auto w-full max-w-[830px] rounded-xl bg-white shadow-md">
+      <article
+        data-cy="modal-add"
+        className="my-auto w-full max-w-[830px] rounded-xl bg-white shadow-md"
+      >
         <header className="border-primary flex h-[70px] items-center border-b px-[30px] text-lg font-semibold">
-          <h3>{todo ? 'Edit Item' : 'Tambah List Item'}</h3>
+          <h3 data-cy="modal-add-title">
+            {todo ? 'Edit Item' : 'Tambah List Item'}
+          </h3>
 
-          <button className="ml-auto" onClick={onClose}>
+          <button
+            data-cy="modal-add-close-button"
+            className="ml-auto"
+            onClick={onClose}
+          >
             <CloseIcon />
           </button>
         </header>
@@ -83,12 +92,14 @@ const TodoEditor = ({ todo, onClose, onSave, ...props }: TodoEditorProps) => {
         >
           <div className="flex flex-col p-8">
             <label
+              data-cy="modal-add-name-title"
               htmlFor={formId + 'name'}
               className="mb-2 text-xs font-semibold uppercase"
             >
               Nama List Item
             </label>
             <input
+              data-cy="modal-add-name-input"
               className="border-primary mb-6 h-[52px] rounded-md border py-[14px] px-[18px] outline-none focus:border-[#16ABF8]"
               type="text"
               placeholder="Tambahkan nama list item"
@@ -99,6 +110,7 @@ const TodoEditor = ({ todo, onClose, onSave, ...props }: TodoEditorProps) => {
             />
 
             <label
+              data-cy="modal-add-priority-title"
               htmlFor={formId + 'priority'}
               className="mb-2 text-xs font-semibold uppercase"
             >
@@ -139,13 +151,19 @@ const TodoEditor = ({ todo, onClose, onSave, ...props }: TodoEditorProps) => {
                   }}
                   className="border-primary mt-0 flex w-52 flex-col rounded-t-none border border-t-0"
                   itemClassName="w-auto"
+                  dataCy="modal-add-priority-dropdown"
+                  itemDataCyPrefix="modal-add-priority-"
                 />
               )}
             </div>
           </div>
 
           <div className="border-primary border-t px-10 py-5">
-            <CustomButton type="submit" className="ml-auto w-40 justify-center">
+            <CustomButton
+              data-cy="modal-add-save-button"
+              type="submit"
+              className="ml-auto w-40 justify-center"
+            >
               Simpan
             </CustomButton>
           </div>
