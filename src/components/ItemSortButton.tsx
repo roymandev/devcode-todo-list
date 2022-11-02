@@ -5,17 +5,16 @@ import SortIcon from '@/components/icons/SortIcon';
 import SortLatestIcon from '@/components/icons/SortLatestIcon';
 import SortOldestIcon from '@/components/icons/SortOldestIcon';
 import SortZtoAIcon from '@/components/icons/SortZtoAIcon';
+import { TODOS_SORT_TYPE } from '@/lib/sortTodos';
 import { useState } from 'react';
 
-export type ITEM_SORT_TYPE = 'latest' | 'oldest' | 'az' | 'za' | 'unfinished';
-
 export interface ItemSortButtonProps {
-  sort: ITEM_SORT_TYPE;
-  setSort: (sortType: ITEM_SORT_TYPE) => void;
+  sort: TODOS_SORT_TYPE;
+  setSort: (sortType: TODOS_SORT_TYPE) => void;
 }
 
 const itemSortType: {
-  value: ITEM_SORT_TYPE;
+  value: TODOS_SORT_TYPE;
   text: string;
   icon: React.ReactNode;
 }[] = [
@@ -62,7 +61,7 @@ const ItemSortButton = ({ sort, setSort }: ItemSortButtonProps) => {
       </button>
 
       {showSelector && (
-        <CustomSelector<ITEM_SORT_TYPE>
+        <CustomSelector<TODOS_SORT_TYPE>
           value={sort}
           onSelect={(value) => {
             setSort(value);

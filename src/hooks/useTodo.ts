@@ -1,21 +1,24 @@
 import { API_BASE_URL, API_TODO_PATH } from '@/constant';
 import { promiseHanlder } from '@/lib/promiseHandler';
+import { sortTodos, TODOS_SORT_TYPE } from '@/lib/sortTodos';
 import { Activity } from '@/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface Todo {
   id: number;
-  activity_group_id: number;
   title: string;
+  activity_group_id: number;
   is_active: boolean;
   priority: 'very-high' | 'high' | 'normal' | 'low' | 'very-low';
-  created_at: string;
-  updated_at: string;
-  deleted_at: null;
 }
 
 const useTodo = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [sortType, setSortType] = useState<TODOS_SORT_TYPE>('latest');
+
+  useEffect(() => {
+    if (todos.length) setTodos((prevTodos) => sortTodos(sortType, prevTodos));
+  }, [sortType]);
 
   const fetchTodos = async (activityId: Todo['id']) => {
     const [res] = await promiseHanlder(
@@ -57,7 +60,7 @@ const useTodo = () => {
       const [resJson] = await promiseHanlder<Todo>(res.json());
 
       if (resJson) {
-        setTodos((todos) => [resJson, ...todos]);
+        setTodos((todos) => sortTodos(sortType, [resJson, ...todos]));
         return;
       }
     }
@@ -110,7 +113,16 @@ const useTodo = () => {
     throw Error('Failed to delete activity with id ' + todoId);
   };
 
-  return { todos, setTodos, fetchTodos, createTodo, updateTodo, deleteTodo };
+  return {
+    todos,
+    setTodos,
+    fetchTodos,
+    createTodo,
+    updateTodo,
+    deleteTodo,
+    sortType,
+    setSortType,
+  };
 };
 
 export default useTodo;

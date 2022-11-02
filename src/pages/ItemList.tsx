@@ -2,7 +2,7 @@ import CustomButton from '@/components/CustomButton';
 import Header from '@/components/Header';
 import CaretLeftIcon from '@/components/icons/CaretLeftIcon';
 import PlusIcon from '@/components/icons/PlusIcon';
-import ItemSortButton, { ITEM_SORT_TYPE } from '@/components/ItemSortButton';
+import ItemSortButton from '@/components/ItemSortButton';
 import ItemTitle from '@/components/ItemTitle';
 import TodoEditor from '@/components/modals/TodoEditor';
 import TodoList from '@/components/TodoList';
@@ -17,8 +17,15 @@ const ItemList = () => {
   const { activityId: activityIdParam } = useParams();
   const { activities, fetchActivity, updateActivity } = useActivity();
   const [activity, setActivity] = useState<Activity | null>(null);
-  const [itemSort, setItemSort] = useState<ITEM_SORT_TYPE>('latest');
-  const { todos, fetchTodos, createTodo, updateTodo, deleteTodo } = useTodo();
+  const {
+    todos,
+    fetchTodos,
+    createTodo,
+    updateTodo,
+    deleteTodo,
+    sortType,
+    setSortType,
+  } = useTodo();
   const [editorTodo, setEditorTodo] = useState<(Todo | true) | false>(false);
 
   useEffect(() => {
@@ -57,7 +64,7 @@ const ItemList = () => {
               />
 
               {!!todos.length && (
-                <ItemSortButton sort={itemSort} setSort={setItemSort} />
+                <ItemSortButton sort={sortType} setSort={setSortType} />
               )}
 
               <CustomButton
