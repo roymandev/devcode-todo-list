@@ -29,12 +29,14 @@ const TodoList = ({
     <>
       {todos.length ? (
         <div className="mt-12 flex flex-col gap-[10px]">
-          {todos.map((todo) => (
+          {todos.map((todo, index) => (
             <div
+              data-cy={'todo-item-' + index}
               key={todo.id}
               className="flex h-20 items-center gap-4 rounded-xl bg-white px-7 text-lg font-medium shadow-lg"
             >
               <span
+                data-cy="todo-item-checkbox"
                 className={twclsx(
                   'border-secondary h-5 w-5 cursor-pointer border flex items-center justify-center',
                   !todo.is_active && 'border-blue bg-primary',
@@ -44,19 +46,28 @@ const TodoList = ({
                 {!todo.is_active && <CheckAltIcon />}
               </span>
 
-              <PriorityIcon className="h-[9px] w-[9px]" type={todo.priority} />
+              <PriorityIcon
+                data-cy="todo-item-priority-indicator"
+                className="h-[9px] w-[9px]"
+                type={todo.priority}
+              />
 
               <h3
+                data-cy="todo-item-title"
                 className={clsx(!todo.is_active && 'text-dimmed line-through')}
               >
                 {todo.title}
               </h3>
 
-              <button onClick={() => editTodo(todo)}>
+              <button
+                data-cy="todo-item-edit-button"
+                onClick={() => editTodo(todo)}
+              >
                 <PencilIcon />
               </button>
 
               <button
+                data-cy="todo-item-delete-button"
                 className="ml-auto"
                 onClick={() => setDeleteTodoData(todo)}
               >
@@ -66,7 +77,11 @@ const TodoList = ({
           ))}
         </div>
       ) : (
-        <button className="mx-auto mt-24" onClick={createTodo}>
+        <button
+          data-cy="todo-empty-state"
+          className="mx-auto mt-24"
+          onClick={createTodo}
+        >
           <img src="/todo-empty-state.png" alt="No activity" />
         </button>
       )}

@@ -10,7 +10,10 @@ export interface DeleteTodoProps extends BaseModalProps {
 
 const DeleteTodo = ({ todo, onDelete, onClose, ...props }: DeleteTodoProps) => (
   <Base onClose={onClose} {...props}>
-    <div className="my-auto flex w-full max-w-lg flex-col items-center rounded-xl bg-white p-10 text-lg shadow-md">
+    <div
+      data-cy="modal-delete"
+      className="my-auto flex w-full max-w-lg flex-col items-center rounded-xl bg-white p-10 text-lg shadow-md"
+    >
       <WarningIcon data-cy="modal-delete-icon" />
 
       <p data-cy="modal-delete-title" className="mt-8 mb-11 text-center">
