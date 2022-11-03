@@ -34,9 +34,9 @@ const useActivity = () => {
       }),
     );
 
-    if (res?.ok) fetchActivities();
+    if (!res?.ok) throw Error('Failed to create new activity');
 
-    throw Error('Failed to create new activity');
+    fetchActivities();
   };
 
   const deleteActivity = async (activityId: Activity['id']): Promise<void> => {
