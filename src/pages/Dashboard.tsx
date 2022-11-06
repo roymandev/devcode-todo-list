@@ -3,16 +3,13 @@ import CustomButton from '@/components/CustomButton';
 import Header from '@/components/Header';
 import PlusIcon from '@/components/icons/PlusIcon';
 import useActivity from '@/hooks/useActivity';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const Dashboard = () => {
   const { fetchActivities, createActivity } = useActivity();
-  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    setErrorMsg('');
-
-    fetchActivities().catch((err: Error) => setErrorMsg(err.message));
+    fetchActivities();
   }, []);
 
   return (
@@ -34,7 +31,7 @@ const Dashboard = () => {
           </CustomButton>
         </div>
 
-        {errorMsg || <ActivityList />}
+        <ActivityList />
       </main>
     </>
   );
