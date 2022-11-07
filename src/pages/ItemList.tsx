@@ -6,8 +6,8 @@ import ItemSortButton from '@/components/ItemSortButton';
 import ItemTitle from '@/components/ItemTitle';
 import TodoEditor from '@/components/modals/TodoEditor';
 import TodoList from '@/components/TodoList';
-import useActivity from '@/hooks/useActivity';
 import useTodo, { Todo } from '@/hooks/useTodo';
+import { getActivity, updateActivity } from '@/lib/activity';
 import { Activity } from '@/store';
 import clsx from 'clsx';
 import { useEffect, useState } from 'react';
@@ -15,7 +15,6 @@ import { Link, useParams } from 'react-router-dom';
 
 const ItemList = () => {
   const { activityId: activityIdParam } = useParams();
-  const { activities, fetchActivity, updateActivity } = useActivity();
   const [activity, setActivity] = useState<Activity | null>(null);
   const {
     todos,
@@ -32,18 +31,12 @@ const ItemList = () => {
     if (activityIdParam) {
       const activityId = parseInt(activityIdParam);
 
-      const activity = activities.find(
-        (activity) => activity.id === activityId,
-      );
-
-      if (!activity) {
-        fetchActivity(activityId);
-      } else {
+      getActivity(activityId).then((activity) => {
         setActivity(activity);
         fetchTodos(activity.id);
-      }
+      });
     }
-  }, [activityIdParam, activities]);
+  }, [activityIdParam]);
 
   return (
     <>
@@ -79,19 +72,17 @@ const ItemList = () => {
           )}
         </div>
 
-        {activities && (
-          <TodoList
-            todos={todos}
-            createTodo={() => setEditorTodo(true)}
-            toggleTodo={(todoId) => {
-              const todo = todos.find((todo) => todo.id === todoId);
-              if (todo)
-                updateTodo(todoId, { ...todo, is_active: !todo.is_active });
-            }}
-            editTodo={(todo) => setEditorTodo(todo)}
-            deleteTodo={deleteTodo}
-          />
-        )}
+        <TodoList
+          todos={todos}
+          createTodo={() => setEditorTodo(true)}
+          toggleTodo={(todoId) => {
+            const todo = todos.find((todo) => todo.id === todoId);
+            if (todo)
+              updateTodo(todoId, { ...todo, is_active: !todo.is_active });
+          }}
+          editTodo={(todo) => setEditorTodo(todo)}
+          deleteTodo={deleteTodo}
+        />
       </main>
 
       {editorTodo && (
