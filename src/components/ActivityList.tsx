@@ -1,13 +1,19 @@
 import Activity from '@/components/Activity';
-import { Activity as ActivityType } from '@/store';
 import ModalDeleteActivity from '@/components/modals/DeleteActivity';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useActivity from '@/hooks/useActivity';
+import { Activity as ActivityType } from '@/store';
 
 const ActivityList = () => {
-  const { activities, createActivity, deleteActivity } = useActivity();
+  const { activities, fetchActivities, addActivity, removeActivity } =
+    useActivity();
+
   const [deleteActivityData, setDeleteActivityData] =
     useState<ActivityType | null>(null);
+
+  useEffect(() => {
+    fetchActivities();
+  }, []);
 
   return (
     <>
@@ -25,7 +31,7 @@ const ActivityList = () => {
         <button
           data-cy="activity-empty-state"
           className="mx-auto"
-          onClick={createActivity}
+          onClick={addActivity}
         >
           <img src="/activity-empty-state.png" alt="No activity" />
         </button>
@@ -35,7 +41,7 @@ const ActivityList = () => {
         <ModalDeleteActivity
           show={!!deleteActivityData}
           activity={deleteActivityData}
-          onDelete={deleteActivity}
+          onDelete={removeActivity}
           onClose={() => setDeleteActivityData(null)}
         />
       )}

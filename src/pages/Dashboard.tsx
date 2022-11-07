@@ -3,14 +3,9 @@ import CustomButton from '@/components/CustomButton';
 import Header from '@/components/Header';
 import PlusIcon from '@/components/icons/PlusIcon';
 import useActivity from '@/hooks/useActivity';
-import { useEffect } from 'react';
 
 const Dashboard = () => {
-  const { fetchActivities, createActivity } = useActivity();
-
-  useEffect(() => {
-    fetchActivities();
-  }, []);
+  const { addActivity } = useActivity();
 
   return (
     <>
@@ -24,7 +19,7 @@ const Dashboard = () => {
           <CustomButton
             data-cy="activity-add-button"
             className="ml-auto"
-            onClick={createActivity}
+            onClick={addActivity}
           >
             <PlusIcon />
             Tambah
