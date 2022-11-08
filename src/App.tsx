@@ -1,13 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
-import Dashboard from '@/pages/Dashboard';
-import ItemList from '@/pages/ItemList';
+import { lazy, Suspense } from 'react';
+
+const Dashboard = lazy(() => import('@/pages/Dashboard'));
+const ItemList = lazy(() => import('@/pages/ItemList'));
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/detail/:activityId" element={<ItemList />} />
-    </Routes>
+    <Suspense fallback={<p>Loading...</p>}>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/detail/:activityId" element={<ItemList />} />
+      </Routes>
+    </Suspense>
   );
 }
 
