@@ -1,99 +1,118 @@
-import CheckAltIcon from '@/components/icons/CheckAltIcon';
-import PencilIcon from '@/components/icons/PencilIcon';
-import PriorityIcon from '@/components/icons/PriorityIcon';
-import TrashIcon from '@/components/icons/TrashIcon';
+import CustomButton from '@/components/CustomButton';
+import CaretLeftIcon from '@/components/icons/CaretLeftIcon';
+import PlusIcon from '@/components/icons/PlusIcon';
+import ItemSortButton from '@/components/ItemSortButton';
+import ItemTitle from '@/components/ItemTitle';
 import DeleteTodo from '@/components/modals/DeleteTodo';
-import { Todo } from '@/hooks/useTodo';
-import twclsx from '@/lib/twclsx';
+import TodoEditor from '@/components/modals/TodoEditor';
+import TodoItem from '@/components/TodoItem';
+import useTodo from '@/hooks/useTodo';
+import { updateActivity } from '@/lib/activity';
+import { Todo } from '@/lib/todo';
+import { Activity } from '@/store';
 import clsx from 'clsx';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export interface TodoListProps {
-  todos: Todo[];
-  createTodo: () => void;
-  toggleTodo: (todoId: Todo['id']) => void;
-  editTodo: (todo: Todo) => void;
-  deleteTodo: (todId: Todo['id']) => void;
+  activity: Activity;
 }
 
-const TodoList = ({
-  todos,
-  createTodo,
-  toggleTodo,
-  editTodo,
-  deleteTodo,
-}: TodoListProps) => {
-  const [deleteTodoData, setDeleteTodoData] = useState<Todo | null>(null);
+const TodoList = ({ activity }: TodoListProps) => {
+  const {
+    todos,
+    addTodo,
+    setTodo,
+    toggleTodo,
+    removeTodo,
+    sortType,
+    setSortType,
+  } = useTodo(activity.id);
+  const [deleteTodoPayload, setDeleteTodoPayload] = useState<Todo | null>(null);
+  const [editTodoPayload, setEditTodoPayload] = useState<Todo | null>(null);
+  const [addTodoModal, setAddTodoModal] = useState(false);
 
   return (
     <>
-      {todos.length ? (
-        <div className="mt-12 flex flex-col gap-[10px]">
-          {todos.map((todo) => (
-            <div
-              data-cy="todo-item"
-              key={todo.id}
-              className="flex h-20 items-center gap-4 rounded-xl bg-white px-7 text-lg font-medium shadow-lg"
-            >
-              <span
-                data-cy="todo-item-checkbox"
-                className={twclsx(
-                  'border-secondary h-5 w-5 cursor-pointer border flex items-center justify-center',
-                  !todo.is_active && 'border-blue bg-primary',
-                )}
-                onClick={() => toggleTodo(todo.id)}
-              >
-                {!todo.is_active && <CheckAltIcon />}
-              </span>
+      <main className="mx-auto flex w-full max-w-[1000px] flex-col py-11">
+        <div className="flex h-[54px] items-center gap-5">
+          <Link data-cy="todo-back-button" to="/" className="mr-2">
+            <CaretLeftIcon />
+          </Link>
 
-              <PriorityIcon
-                data-cy="todo-item-priority-indicator"
-                className="h-[9px] w-[9px]"
-                type={todo.priority}
-              />
+          <ItemTitle
+            title={activity.title}
+            onChange={(newTitle) => {
+              updateActivity(activity.id, { title: newTitle });
+            }}
+          />
 
-              <h3
-                data-cy="todo-item-title"
-                className={clsx(!todo.is_active && 'text-dimmed line-through')}
-              >
-                {todo.title}
-              </h3>
+          {!!todos.length && (
+            <ItemSortButton sort={sortType} setSort={setSortType} />
+          )}
 
-              <button
-                data-cy="todo-item-edit-button"
-                onClick={() => editTodo(todo)}
-              >
-                <PencilIcon />
-              </button>
-
-              <button
-                data-cy="todo-item-delete-button"
-                className="ml-auto"
-                onClick={() => setDeleteTodoData(todo)}
-              >
-                <TrashIcon />
-              </button>
-            </div>
-          ))}
+          <CustomButton
+            data-cy="todo-add-button"
+            className={clsx(!todos.length && 'ml-auto')}
+            onClick={() => setAddTodoModal(true)}
+          >
+            <PlusIcon />
+            Tambah
+          </CustomButton>
         </div>
-      ) : (
-        <button
-          data-cy="todo-empty-state"
-          className="mx-auto mt-24"
-          onClick={createTodo}
-        >
-          <img src="/todo-empty-state.png" alt="No activity" />
-        </button>
-      )}
 
-      {deleteTodoData && (
+        {todos.length ? (
+          <div className="mt-12 flex flex-col gap-[10px]">
+            {todos.map((todo) => (
+              <TodoItem
+                key={todo.id}
+                todo={todo}
+                onToggleTodo={toggleTodo}
+                onEditTodo={setEditTodoPayload}
+                onDeleteTodo={setDeleteTodoPayload}
+              />
+            ))}
+          </div>
+        ) : (
+          <button
+            data-cy="todo-empty-state"
+            className="mx-auto mt-24"
+            onClick={() => setAddTodoModal(true)}
+          >
+            <img src="/todo-empty-state.png" alt="No activity" />
+          </button>
+        )}
+      </main>
+
+      {deleteTodoPayload && (
         <DeleteTodo
-          show={!!deleteTodoData}
-          onClose={() => setDeleteTodoData(null)}
-          todo={deleteTodoData}
-          onDelete={(todoId) => deleteTodo(todoId)}
+          show={!!deleteTodoPayload}
+          onClose={() => setDeleteTodoPayload(null)}
+          todo={deleteTodoPayload}
+          onDelete={(todoId) => removeTodo(todoId)}
         />
       )}
+
+      {editTodoPayload && (
+        <TodoEditor
+          todo={editTodoPayload}
+          show={!!editTodoPayload}
+          onClose={() => setEditTodoPayload(null)}
+          onSave={(title, priority) =>
+            setTodo(editTodoPayload.id, {
+              title,
+              priority,
+              is_active: editTodoPayload.is_active,
+            })
+          }
+        />
+      )}
+
+      <TodoEditor
+        show={addTodoModal}
+        onClose={() => setAddTodoModal(false)}
+        onSave={(title, priority) => addTodo(activity.id, title, priority)}
+      />
     </>
   );
 };
