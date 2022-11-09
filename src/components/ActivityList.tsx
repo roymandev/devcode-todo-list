@@ -39,7 +39,6 @@ const ActivityList = () => {
 
       {deleteActivityData && (
         <ModalDeleteActivity
-          show={!!deleteActivityData}
           activity={deleteActivityData}
           onDelete={removeActivity}
           onClose={() => setDeleteActivityData(null)}

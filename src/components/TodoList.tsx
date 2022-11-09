@@ -86,7 +86,6 @@ const TodoList = ({ activity }: TodoListProps) => {
 
       {deleteTodoPayload && (
         <DeleteTodo
-          show={!!deleteTodoPayload}
           onClose={() => setDeleteTodoPayload(null)}
           todo={deleteTodoPayload}
           onDelete={(todoId) => removeTodo(todoId)}
@@ -96,7 +95,6 @@ const TodoList = ({ activity }: TodoListProps) => {
       {editTodoPayload && (
         <TodoEditor
           todo={editTodoPayload}
-          show={!!editTodoPayload}
           onClose={() => setEditTodoPayload(null)}
           onSave={(title, priority) =>
             setTodo(editTodoPayload.id, {
@@ -108,11 +106,12 @@ const TodoList = ({ activity }: TodoListProps) => {
         />
       )}
 
-      <TodoEditor
-        show={addTodoModal}
-        onClose={() => setAddTodoModal(false)}
-        onSave={(title, priority) => addTodo(activity.id, title, priority)}
-      />
+      {addTodoModal && (
+        <TodoEditor
+          onClose={() => setAddTodoModal(false)}
+          onSave={(title, priority) => addTodo(activity.id, title, priority)}
+        />
+      )}
     </>
   );
 };
