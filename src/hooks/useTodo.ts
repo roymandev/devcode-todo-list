@@ -15,7 +15,8 @@ const useTodo = (activityId: Activity['id']) => {
     if (todos.length) setTodos((prevTodos) => sortTodos(sortType, prevTodos));
   }, [sortType]);
 
-  const fetchTodos = () => getTodos(activityId).then(setTodos);
+  const fetchTodos = () =>
+    getTodos(activityId).then((todos) => setTodos(sortTodos(sortType, todos)));
 
   const addTodo: typeof createTodo = (activityId, title, priority) =>
     createTodo(activityId, title, priority).then(() => fetchTodos());
@@ -34,9 +35,15 @@ const useTodo = (activityId: Activity['id']) => {
 
       updateTodo(todoId, newTodo);
 
-      setTodos((todos) =>
-        todos.map((todo) => (todo.id === todoId ? newTodo : todo)),
-      );
+      setTodos((todos) => {
+        let newTodos = todos.map((todo) =>
+          todo.id === todoId ? newTodo : todo,
+        );
+
+        if (sortType === 'unfinished') newTodos = sortTodos(sortType, newTodos);
+
+        return newTodos;
+      });
     }
   };
 
