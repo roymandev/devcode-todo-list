@@ -1,4 +1,4 @@
-import { Todo } from '@/hooks/useTodo';
+import { Todo } from '@/lib/todo';
 import twclsx from '@/lib/twclsx';
 import { ComponentPropsWithoutRef } from 'react';
 

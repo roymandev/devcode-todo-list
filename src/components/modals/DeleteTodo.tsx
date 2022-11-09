@@ -1,7 +1,7 @@
 import CustomButton from '@/components/CustomButton';
 import WarningIcon from '@/components/icons/WarningIcon';
 import Base, { BaseModalProps } from '@/components/modals/Base';
-import { Todo } from '@/hooks/useTodo';
+import { Todo } from '@/lib/todo';
 
 export interface DeleteTodoProps extends BaseModalProps {
   todo: Todo;

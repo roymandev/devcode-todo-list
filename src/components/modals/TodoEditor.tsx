@@ -4,7 +4,7 @@ import ChevronIcon from '@/components/icons/ChevronIcon';
 import CloseIcon from '@/components/icons/CloseIcon';
 import PriorityIcon from '@/components/icons/PriorityIcon';
 import Base, { BaseModalProps } from '@/components/modals/Base';
-import { Todo } from '@/hooks/useTodo';
+import { Todo } from '@/lib/todo';
 import twclsx from '@/lib/twclsx';
 import { useEffect, useId, useState } from 'react';
 

@@ -1,4 +1,4 @@
-import { Todo } from '@/hooks/useTodo';
+import { Todo } from '@/lib/todo';
 
 export type TODOS_SORT_TYPE = 'latest' | 'oldest' | 'az' | 'za' | 'unfinished';
 
