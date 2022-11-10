@@ -7,7 +7,7 @@ export interface CustomSelectorProps<T = string> {
   className?: string;
   currentValue: T;
   items: Item<T>[];
-  renderItem: (value: T, item: Item<T>) => React.ReactNode;
+  renderItem: (item: Item<T>, isSelected: boolean) => React.ReactNode;
 }
 
 const CustomSelector = <T,>({
@@ -23,7 +23,7 @@ const CustomSelector = <T,>({
         className,
       )}
     >
-      {items.map((item) => renderItem(currentValue, item))}
+      {items.map((item) => renderItem(item, currentValue === item.value))}
     </div>
   );
 };

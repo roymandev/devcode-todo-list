@@ -66,12 +66,12 @@ const ItemSortButton = ({ sort, setSort }: ItemSortButtonProps) => {
           currentValue={sort}
           items={itemSortType}
           className="shadow-lg"
-          renderItem={(currentValue, item) => (
+          renderItem={(item, isSelected) => (
             <CustomSelectorItem
               data-cy="sort-selection"
               key={item.value}
               item={item}
-              isSelected={item.value === currentValue}
+              isSelected={isSelected}
               onClick={() => {
                 setSort(item.value);
                 toggleShowSelector();

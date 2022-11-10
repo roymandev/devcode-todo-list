@@ -139,13 +139,13 @@ const TodoEditor = ({ todo, onClose, onSave, ...props }: TodoEditorProps) => {
                 items={selectorItems}
                 currentValue={priority}
                 className="border-primary mt-0 flex w-52 flex-col rounded-t-none border border-t-0"
-                renderItem={(currentValue, item) => (
+                renderItem={(item, isSelected) => (
                   <CustomSelectorItem
                     data-cy="modal-add-priority-item"
                     key={item.value}
                     className="w-auto"
                     item={item}
-                    isSelected={item.value === currentValue}
+                    isSelected={isSelected}
                     onClick={() => {
                       setPriority(item.value);
                       setOpenSelector(false);
