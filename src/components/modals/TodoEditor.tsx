@@ -1,5 +1,6 @@
 import CustomButton from '@/components/CustomButton';
 import CustomSelector from '@/components/CustomSelector';
+import CustomSelectorItem from '@/components/CustomSelectorItem';
 import ChevronIcon from '@/components/icons/ChevronIcon';
 import CloseIcon from '@/components/icons/CloseIcon';
 import PriorityIcon from '@/components/icons/PriorityIcon';
@@ -119,6 +120,7 @@ const TodoEditor = ({ todo, onClose, onSave, ...props }: TodoEditorProps) => {
 
             <div>
               <button
+                data-cy="modal-add-priority-dropdown"
                 id={formId + 'priority'}
                 type="button"
                 className={twclsx(
@@ -144,15 +146,21 @@ const TodoEditor = ({ todo, onClose, onSave, ...props }: TodoEditorProps) => {
               {openSelector && (
                 <CustomSelector<Todo['priority']>
                   items={selectorItems}
-                  value={priority}
-                  onSelect={(value) => {
-                    setPriority(value);
-                    setOpenSelector(false);
-                  }}
+                  currentValue={priority}
                   className="border-primary mt-0 flex w-52 flex-col rounded-t-none border border-t-0"
-                  itemClassName="w-auto"
-                  dataCy="modal-add-priority-dropdown"
-                  itemDataCyPrefix="modal-add-priority-"
+                  renderItem={(currentValue, item) => (
+                    <CustomSelectorItem
+                      data-cy="modal-add-priority-item"
+                      key={item.value}
+                      className="w-auto"
+                      item={item}
+                      isSelected={item.value === currentValue}
+                      onClick={() => {
+                        setPriority(item.value);
+                        setOpenSelector(false);
+                      }}
+                    />
+                  )}
                 />
               )}
             </div>

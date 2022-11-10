@@ -1,54 +1,29 @@
-import CheckIcon from '@/components/icons/CheckIcon';
+import { CustomSelectorItemProps } from '@/components/CustomSelectorItem';
 import twclsx from '@/lib/twclsx';
 
-export interface CustomDropdownProps<T = string> {
+type Item<T> = CustomSelectorItemProps<T>['item'];
+
+export interface CustomSelectorProps<T = string> {
   className?: string;
-  itemClassName?: string;
-  value: T;
-  items: {
-    value: T;
-    text: string;
-    icon: React.ReactNode;
-  }[];
-  onSelect: (item: T) => void;
-  itemDataCyPrefix: string;
-  dataCy: string;
+  currentValue: T;
+  items: Item<T>[];
+  renderItem: (value: T, item: Item<T>) => React.ReactNode;
 }
 
 const CustomSelector = <T,>({
-  value,
+  currentValue,
   items,
   className,
-  itemClassName,
-  onSelect,
-  itemDataCyPrefix,
-  dataCy,
-}: CustomDropdownProps<T>) => {
+  renderItem,
+}: CustomSelectorProps<T>) => {
   return (
     <div
-      data-cy={dataCy}
       className={twclsx(
         'divide-primary absolute mt-1 divide-y rounded-md bg-white',
         className,
       )}
     >
-      {items.map((item) => {
-        return (
-          <button
-            data-cy={itemDataCyPrefix + item.value}
-            key={item.text}
-            className={twclsx(
-              'flex h-[52px] w-56 items-center gap-4 py-4 px-5',
-              itemClassName,
-            )}
-            onClick={() => onSelect(item.value)}
-          >
-            {item.icon}
-            {item.text}
-            {item.value === value && <CheckIcon className="ml-auto" />}
-          </button>
-        );
-      })}
+      {items.map((item) => renderItem(currentValue, item))}
     </div>
   );
 };

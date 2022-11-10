@@ -1,4 +1,5 @@
 import CustomSelector from '@/components/CustomSelector';
+import CustomSelectorItem from '@/components/CustomSelectorItem';
 import SortAltIcon from '@/components/icons/SortAltIcon';
 import SortAtoZIcon from '@/components/icons/SortAtoZIcon';
 import SortIcon from '@/components/icons/SortIcon';
@@ -62,15 +63,21 @@ const ItemSortButton = ({ sort, setSort }: ItemSortButtonProps) => {
 
       {showSelector && (
         <CustomSelector<TODOS_SORT_TYPE>
-          value={sort}
-          onSelect={(value) => {
-            setSort(value);
-            toggleShowSelector();
-          }}
+          currentValue={sort}
           items={itemSortType}
           className="shadow-lg"
-          dataCy="sort-parent"
-          itemDataCyPrefix="sort-"
+          renderItem={(currentValue, item) => (
+            <CustomSelectorItem
+              data-cy="sort-selection"
+              key={item.value}
+              item={item}
+              isSelected={item.value === currentValue}
+              onClick={() => {
+                setSort(item.value);
+                toggleShowSelector();
+              }}
+            />
+          )}
         />
       )}
     </div>
