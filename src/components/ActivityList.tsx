@@ -11,13 +11,18 @@ const ActivityList = () => {
   const [deleteActivityData, setDeleteActivityData] =
     useState<ActivityType | null>(null);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    fetchActivities();
+    setIsLoading(true);
+    fetchActivities().then(() => setIsLoading(false));
   }, []);
 
   return (
     <>
-      {activities.length ? (
+      {isLoading ? (
+        <p>Loading activities...</p>
+      ) : activities.length ? (
         <div className="grid grid-cols-4 gap-5">
           {activities.map((activity) => (
             <Activity
