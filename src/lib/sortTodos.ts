@@ -20,7 +20,7 @@ export const sortTodos = (sortType: TODOS_SORT_TYPE, todos: Todo[]) => {
   }
 
   if (sortType === 'unfinished') {
-    return [...todos].sort((a, b) => Number(a.is_active) - Number(b.is_active));
+    return [...todos].sort((a, b) => Number(b.is_active) - Number(a.is_active));
   }
 
   return todos;
