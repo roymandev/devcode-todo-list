@@ -82,101 +82,96 @@ const TodoEditor = ({ todo, onClose, onSave, ...props }: TodoEditorProps) => {
             <CloseIcon />
           </button>
         </header>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (title) {
-              onSave(title, priority);
-              onClose();
-            }
-          }}
-        >
-          <div className="flex flex-col p-8">
-            <label
-              data-cy="modal-add-name-title"
-              htmlFor={formId + 'name'}
-              className="mb-2 text-xs font-semibold uppercase"
+        <div className="flex flex-col p-8">
+          <label
+            data-cy="modal-add-name-title"
+            htmlFor={formId + 'name'}
+            className="mb-2 text-xs font-semibold uppercase"
+          >
+            Nama List Item
+          </label>
+          <input
+            data-cy="modal-add-name-input"
+            className="border-primary mb-6 h-[52px] rounded-md border py-[14px] px-[18px] outline-none focus:border-[#16ABF8]"
+            type="text"
+            placeholder="Tambahkan nama list item"
+            required
+            id={formId + 'name'}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+
+          <label
+            data-cy="modal-add-priority-title"
+            htmlFor={formId + 'priority'}
+            className="mb-2 text-xs font-semibold uppercase"
+          >
+            Priority
+          </label>
+
+          <div>
+            <button
+              data-cy="modal-add-priority-dropdown"
+              id={formId + 'priority'}
+              type="button"
+              className={twclsx(
+                'border-primary flex h-[52px] w-52 items-center gap-4 rounded-md border py-4 px-5',
+                openSelector && 'rounded-b-none bg-secondary',
+              )}
+              onClick={() => setOpenSelector((prev) => !prev)}
             >
-              Nama List Item
-            </label>
-            <input
-              data-cy="modal-add-name-input"
-              className="border-primary mb-6 h-[52px] rounded-md border py-[14px] px-[18px] outline-none focus:border-[#16ABF8]"
-              type="text"
-              placeholder="Tambahkan nama list item"
-              required
-              id={formId + 'name'}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-
-            <label
-              data-cy="modal-add-priority-title"
-              htmlFor={formId + 'priority'}
-              className="mb-2 text-xs font-semibold uppercase"
-            >
-              Priority
-            </label>
-
-            <div>
-              <button
-                data-cy="modal-add-priority-dropdown"
-                id={formId + 'priority'}
-                type="button"
-                className={twclsx(
-                  'border-primary flex h-[52px] w-52 items-center gap-4 rounded-md border py-4 px-5',
-                  openSelector && 'rounded-b-none bg-secondary',
-                )}
-                onClick={() => setOpenSelector((prev) => !prev)}
-              >
-                {!openSelector && (
-                  <PriorityIcon
-                    type={getSelectedPriority()?.value || 'very-high'}
-                  />
-                )}
-                {openSelector
-                  ? 'Pilih Priority'
-                  : getSelectedPriority()?.text || 'Very High'}
-                <ChevronIcon
-                  direction={openSelector ? 'top' : 'bottom'}
-                  className="ml-auto"
-                />
-              </button>
-
-              {openSelector && (
-                <CustomSelector<Todo['priority']>
-                  items={selectorItems}
-                  currentValue={priority}
-                  className="border-primary mt-0 flex w-52 flex-col rounded-t-none border border-t-0"
-                  renderItem={(currentValue, item) => (
-                    <CustomSelectorItem
-                      data-cy="modal-add-priority-item"
-                      key={item.value}
-                      className="w-auto"
-                      item={item}
-                      isSelected={item.value === currentValue}
-                      onClick={() => {
-                        setPriority(item.value);
-                        setOpenSelector(false);
-                      }}
-                    />
-                  )}
+              {!openSelector && (
+                <PriorityIcon
+                  type={getSelectedPriority()?.value || 'very-high'}
                 />
               )}
-            </div>
-          </div>
+              {openSelector
+                ? 'Pilih Priority'
+                : getSelectedPriority()?.text || 'Very High'}
+              <ChevronIcon
+                direction={openSelector ? 'top' : 'bottom'}
+                className="ml-auto"
+              />
+            </button>
 
-          <div className="border-primary border-t px-10 py-5">
-            <CustomButton
-              data-cy="modal-add-save-button"
-              type="submit"
-              className="ml-auto w-40 justify-center disabled:opacity-20"
-              disabled={!title}
-            >
-              Simpan
-            </CustomButton>
+            {openSelector && (
+              <CustomSelector<Todo['priority']>
+                items={selectorItems}
+                currentValue={priority}
+                className="border-primary mt-0 flex w-52 flex-col rounded-t-none border border-t-0"
+                renderItem={(currentValue, item) => (
+                  <CustomSelectorItem
+                    data-cy="modal-add-priority-item"
+                    key={item.value}
+                    className="w-auto"
+                    item={item}
+                    isSelected={item.value === currentValue}
+                    onClick={() => {
+                      setPriority(item.value);
+                      setOpenSelector(false);
+                    }}
+                  />
+                )}
+              />
+            )}
           </div>
-        </form>
+        </div>
+
+        <div className="border-primary border-t px-10 py-5">
+          <CustomButton
+            data-cy="modal-add-save-button"
+            className="ml-auto w-40 justify-center disabled:opacity-20"
+            disabled={!title}
+            onClick={() => {
+              if (title) {
+                onSave(title, priority);
+                onClose();
+              }
+            }}
+          >
+            Simpan
+          </CustomButton>
+        </div>
       </article>
     </Base>
   );
