@@ -1,6 +1,6 @@
 import CustomButton from '@/components/CustomButton';
-import InformationIcon from '@/components/icons/InformationIcon';
 import WarningIcon from '@/components/icons/WarningIcon';
+import ModalInformation from '@/components/ModalInformation';
 import Base, { BaseModalProps } from '@/components/modals/Base';
 import { Activity } from '@/store';
 import { useState } from 'react';
@@ -26,13 +26,7 @@ const DeleteActivity = ({
   return (
     <Base onClose={onCloseHanlder} {...rest}>
       {isDelete ? (
-        <div
-          data-cy="modal-information"
-          className="mt-48 flex w-full max-w-lg items-center gap-3 rounded-xl bg-white px-7 py-4 text-sm shadow-md"
-        >
-          <InformationIcon data-cy="modal-information-icon" />
-          <p data-cy="modal-information-title">Activity berhasil dihapus</p>
-        </div>
+        <ModalInformation text="Activity berhasil dihapus" />
       ) : (
         <div
           data-cy="modal-delete"
