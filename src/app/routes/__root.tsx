@@ -1,1 +1,1 @@
-export { Route } from '../widgets/root';
+export { RootRoute as Route } from '../../widgets/root';
