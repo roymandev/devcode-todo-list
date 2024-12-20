@@ -1,9 +1,1 @@
-import { createFileRoute } from '@tanstack/react-router';
-
-export const Route = createFileRoute('/')({
-  component: RouteComponent,
-});
-
-function RouteComponent() {
-  return <div className="text-2xl">Hello "/"!</div>;
-}
+export { HomeRoute as Route } from '../pages/home/api/route';
