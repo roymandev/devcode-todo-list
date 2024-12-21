@@ -8,3 +8,15 @@ export type ResGetActivityList = {
     created_at: string;
   }[];
 };
+
+export type PayloadCreateActivity = {
+  title: string;
+  email?: string;
+};
+export type ResCreateActivity = {
+  created_at: string;
+  updated_at: string;
+  id: number;
+  title: string;
+  email: string;
+};

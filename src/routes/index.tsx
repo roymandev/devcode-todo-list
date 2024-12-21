@@ -1,10 +1,11 @@
 import { IconPlus } from '@tabler/icons-react';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button } from '../components/Button';
 import { PageTitle } from '../components/PageTitle';
 import { Query } from '../libs/query';
 import { queryActivityList } from '../modules/activity/api/activity-list';
+import { mutateCreateActivity } from '../modules/activity/api/create-activity';
 import { ActivityCard } from '../modules/activity/ui/ActivityCard';
 
 export const Route = createFileRoute('/')({
@@ -17,7 +18,9 @@ function HomePage() {
     data: { data },
   } = useSuspenseQuery(queryActivityList());
 
-  const handleAddActivity = () => {};
+  const { isPending, mutate } = useMutation(mutateCreateActivity);
+
+  const handleAddActivity = () => mutate();
 
   const handleDeleteActivity = (id: number) => {
     console.log(id);
@@ -33,13 +36,18 @@ function HomePage() {
             className="ml-auto"
             leftIcon={<IconPlus size={24} />}
             onClick={handleAddActivity}
+            disabled={isPending}
           >
             Tambah
           </Button>
         </header>
 
         {!data.length && (
-          <Button variant="unstyled" className="mx-auto block">
+          <Button
+            variant="unstyled"
+            className="mx-auto block"
+            disabled={isPending}
+          >
             <img src="/images/activity-empty-state.svg" alt="Empty state" />
           </Button>
         )}
