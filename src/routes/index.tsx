@@ -6,6 +6,7 @@ import { PageTitle } from '../components/PageTitle';
 import { Query } from '../libs/query';
 import { queryActivityList } from '../modules/activity/api/activity-list';
 import { mutateCreateActivity } from '../modules/activity/api/create-activity';
+import { mutateRemoveActivity } from '../modules/activity/api/remove-activity';
 import { ActivityCard } from '../modules/activity/ui/ActivityCard';
 
 export const Route = createFileRoute('/')({
@@ -18,13 +19,12 @@ function HomePage() {
     data: { data },
   } = useSuspenseQuery(queryActivityList());
 
-  const { isPending, mutate } = useMutation(mutateCreateActivity);
+  const mutationCreateActivity = useMutation(mutateCreateActivity);
+  const mutationRemoveActivity = useMutation(mutateRemoveActivity);
 
-  const handleAddActivity = () => mutate();
+  const handleAddActivity = () => mutationCreateActivity.mutate();
 
-  const handleDeleteActivity = (id: number) => {
-    console.log(id);
-  };
+  const handleDeleteActivity = mutationRemoveActivity.mutate;
 
   return (
     <main className="container">
@@ -36,23 +36,22 @@ function HomePage() {
             className="ml-auto"
             leftIcon={<IconPlus size={24} />}
             onClick={handleAddActivity}
-            disabled={isPending}
+            disabled={mutationCreateActivity.isPending}
           >
             Tambah
           </Button>
         </header>
 
-        {!data.length && (
+        {!data.length ? (
           <Button
             variant="unstyled"
             className="mx-auto block"
-            disabled={isPending}
+            disabled={mutationCreateActivity.isPending}
+            onClick={handleAddActivity}
           >
             <img src="/images/activity-empty-state.svg" alt="Empty state" />
           </Button>
-        )}
-
-        {data.length && (
+        ) : (
           <div className="grid grid-cols-4 gap-x-5 gap-y-6">
             {data.map((activity) => (
               <ActivityCard
