@@ -3,9 +3,11 @@ import { createRoot } from 'react-dom/client';
 
 import './app/styles/main.css';
 
+import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 // Import the generated route tree
 import { routeTree } from '../routeTree.gen.ts';
+import { Query } from './shared/api/client.ts';
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -20,6 +22,8 @@ declare module '@tanstack/react-router' {
 // biome-ignore lint/style/noNonNullAssertion: This is root code
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={Query}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </StrictMode>,
 );
