@@ -1,4 +1,4 @@
-export const Header = () => {
+export const MainHeader = () => {
   return (
     <div data-cy="header-background" className="bg-primary text-white">
       <header className="container flex h-28 items-center">

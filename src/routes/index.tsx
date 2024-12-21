@@ -1,16 +1,27 @@
 import { IconPlus } from '@tabler/icons-react';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { ActivityCard, queryActivityList } from '../../../entities/activity';
-import { Button, PageTitle } from '../../../shared/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import { Button } from '../components/Button';
+import { PageTitle } from '../components/PageTitle';
+import { Query } from '../libs/query';
+import { queryActivityList } from '../modules/activity/api/activity-list';
+import { ActivityCard } from '../modules/activity/ui/ActivityCard';
 
-export const HomePage = () => {
+export const Route = createFileRoute('/')({
+  component: HomePage,
+  loader: () => Query.ensureQueryData(queryActivityList()),
+});
+
+function HomePage() {
   const {
     data: { data },
   } = useSuspenseQuery(queryActivityList());
 
   const handleAddActivity = () => {};
 
-  const handleDeleteActivity = (id: number) => {};
+  const handleDeleteActivity = (id: number) => {
+    console.log(id);
+  };
 
   return (
     <main className="container">
@@ -40,7 +51,7 @@ export const HomePage = () => {
                 key={activity.id}
                 title={activity.title}
                 date={activity.created_at}
-                onDelete={() => {}}
+                onDelete={() => handleDeleteActivity(activity.id)}
               />
             ))}
           </div>
@@ -48,4 +59,4 @@ export const HomePage = () => {
       </section>
     </main>
   );
-};
+}

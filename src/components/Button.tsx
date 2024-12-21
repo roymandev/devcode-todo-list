@@ -1,6 +1,6 @@
 import { Slot } from '@radix-ui/react-slot';
 import type { ComponentProps } from 'react';
-import { cn } from '../lib';
+import { cn } from '../libs/cn';
 
 type Props = {
   variant?: 'primary' | 'secondary' | 'danger' | 'outlined' | 'unstyled';

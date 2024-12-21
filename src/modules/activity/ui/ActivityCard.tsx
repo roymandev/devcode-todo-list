@@ -1,6 +1,6 @@
 import { IconTrash } from '@tabler/icons-react';
 import dayjs from 'dayjs';
-import { Button } from '../../../shared/ui';
+import { Button } from '../../../components/Button';
 
 type Props = {
   title: string;
@@ -18,7 +18,11 @@ export const ActivityCard = ({ title, date, onDelete }: Props) => {
           {dayjs(date).format('D MMMM YYYY')}
         </p>
 
-        <Button variant="unstyled" onClick={onDelete}>
+        <Button
+          variant="unstyled"
+          title="Delete this activity"
+          onClick={onDelete}
+        >
           <IconTrash />
         </Button>
       </div>
