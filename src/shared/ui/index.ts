@@ -1,2 +1,3 @@
 export { Header } from './Header';
-export { PageHeader } from './PageHeader';
+export { Button } from './Button';
+export { PageTitle } from './PageTitle';
