@@ -1,6 +1,6 @@
 import { IconPlus } from '@tabler/icons-react';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { createFileRoute } from '@tanstack/react-router';
+import { Link, createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 import { Button } from '../components/Button';
 import { PageTitle } from '../components/PageTitle';
@@ -71,13 +71,24 @@ function HomePage() {
           ) : (
             <div className="grid grid-cols-4 gap-x-5 gap-y-6">
               {data.map((activity, index) => (
-                <ActivityCard
+                <Link
                   data-cy={`activity-item-${index}`}
                   key={activity.id}
-                  title={activity.title}
-                  date={activity.created_at}
-                  onDelete={() => handleDeleteActivity(activity)}
-                />
+                  to="/activity/$id"
+                  params={{
+                    id: activity.id.toString(),
+                  }}
+                >
+                  <ActivityCard
+                    title={activity.title}
+                    date={activity.created_at}
+                    onDelete={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      handleDeleteActivity(activity);
+                    }}
+                  />
+                </Link>
               ))}
             </div>
           )}
