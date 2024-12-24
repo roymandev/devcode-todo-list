@@ -10,6 +10,7 @@ export default {
     colors: {
       transparent: 'transparent',
       white: '#FFFFFF',
+      black: '#000000',
       dark: '#111111',
       primary: '#16ABF8',
       gray: {

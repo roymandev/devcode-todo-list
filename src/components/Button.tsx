@@ -23,8 +23,10 @@ export const Button = ({
       type="button"
       className={cn(
         variant !== 'unstyled' &&
-          'flex h-14 items-center gap-2 rounded-full px-7 font-semibold text-lg',
+          'flex h-14 items-center justify-center gap-2 rounded-full px-7 font-semibold text-lg',
         variant === 'primary' && 'bg-primary text-white',
+        variant === 'secondary' && 'bg-gray-100 text-gray-700',
+        variant === 'danger' && 'bg-red text-white',
         leftIcon && 'pl-6',
         className,
       )}
