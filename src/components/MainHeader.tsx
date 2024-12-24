@@ -3,7 +3,7 @@ export const MainHeader = () => {
     <div data-cy="header-background" className="bg-primary text-white">
       <header className="container flex h-28 items-center">
         <span data-cy="header-title" className="font-bold text-2xl uppercase">
-          To Do List App
+          TO DO LIST APP
         </span>
       </header>
     </div>

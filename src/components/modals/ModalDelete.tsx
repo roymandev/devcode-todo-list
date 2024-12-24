@@ -48,8 +48,13 @@ const ModalDelete = ({
             className="relative mx-auto max-w-2xl rounded-xl bg-white px-7 py-5"
           >
             <div className="flex gap-3">
-              <IconInfoCircle className="text-green" />
-              <p className="font-medium">{successMessage}</p>
+              <IconInfoCircle
+                data-cy="modal-information-icon"
+                className="text-green"
+              />
+              <p data-cy="modal-information-title" className="font-medium">
+                {successMessage}
+              </p>
             </div>
           </Dialog.Content>
         ) : (
@@ -60,23 +65,32 @@ const ModalDelete = ({
           >
             <div>
               <IconAlertTriangle
+                data-cy="modal-delete-icon"
                 size={84}
                 stroke={1}
                 className="mx-auto text-red"
               />
             </div>
-            <Dialog.Title className="mt-8 text-center text-lg">
+            <Dialog.Title
+              data-cy="modal-delete-title"
+              className="mt-8 text-center text-lg"
+            >
               {title}
             </Dialog.Title>
 
             <div className="mt-12 flex justify-center gap-5">
               <Dialog.Close asChild>
-                <Button variant="secondary" className="w-[150px]">
+                <Button
+                  data-cy="modal-delete-cancel-button"
+                  variant="secondary"
+                  className="w-[150px]"
+                >
                   Batal
                 </Button>
               </Dialog.Close>
 
               <Button
+                data-cy="modal-delete-confirm-button"
                 variant="danger"
                 className="w-[150px]"
                 onClick={handleApply}

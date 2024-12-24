@@ -48,6 +48,7 @@ function HomePage() {
             <PageTitle data-cy="activity-title">Activity</PageTitle>
 
             <Button
+              data-cy="activity-add-button"
               className="ml-auto"
               leftIcon={<IconPlus size={24} />}
               onClick={handleAddActivity}
@@ -59,6 +60,7 @@ function HomePage() {
 
           {!data.length ? (
             <Button
+              data-cy="activity-empty-state"
               variant="unstyled"
               className="mx-auto block"
               disabled={mutationCreateActivity.isPending}
@@ -68,8 +70,9 @@ function HomePage() {
             </Button>
           ) : (
             <div className="grid grid-cols-4 gap-x-5 gap-y-6">
-              {data.map((activity) => (
+              {data.map((activity, index) => (
                 <ActivityCard
+                  data-cy={`activity-item-${index}`}
                   key={activity.id}
                   title={activity.title}
                   date={activity.created_at}
