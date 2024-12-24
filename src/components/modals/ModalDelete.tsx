@@ -94,7 +94,7 @@ const ModalDelete = ({
                 variant="danger"
                 className="w-[150px]"
                 onClick={handleApply}
-                disabled={loading}
+                loading={loading}
               >
                 Hapus
               </Button>

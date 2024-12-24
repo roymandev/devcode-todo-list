@@ -6,6 +6,7 @@ type Props = {
   variant?: 'primary' | 'secondary' | 'danger' | 'outlined' | 'unstyled';
   leftIcon?: React.ReactNode;
   asChild?: boolean;
+  loading?: boolean;
 } & ComponentProps<'button'>;
 
 export const Button = ({
@@ -14,6 +15,8 @@ export const Button = ({
   leftIcon,
   children,
   asChild,
+  loading,
+  disabled,
   ...rest
 }: Props) => {
   const Comp = asChild ? Slot : 'button';
@@ -23,13 +26,14 @@ export const Button = ({
       type="button"
       className={cn(
         variant !== 'unstyled' &&
-          'flex h-14 items-center justify-center gap-2 rounded-full px-7 font-semibold text-lg',
+          'flex h-14 items-center justify-center gap-2 rounded-full px-7 font-semibold text-lg disabled:opacity-80',
         variant === 'primary' && 'bg-primary text-white',
         variant === 'secondary' && 'bg-gray-100 text-gray-700',
         variant === 'danger' && 'bg-red text-white',
         leftIcon && 'pl-6',
         className,
       )}
+      disabled={loading || disabled}
       {...rest}
     >
       {leftIcon}

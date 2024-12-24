@@ -52,7 +52,7 @@ function HomePage() {
               className="ml-auto"
               leftIcon={<IconPlus size={24} />}
               onClick={handleAddActivity}
-              disabled={mutationCreateActivity.isPending}
+              loading={mutationCreateActivity.isPending}
             >
               Tambah
             </Button>
@@ -63,7 +63,7 @@ function HomePage() {
               data-cy="activity-empty-state"
               variant="unstyled"
               className="mx-auto block"
-              disabled={mutationCreateActivity.isPending}
+              loading={mutationCreateActivity.isPending}
               onClick={handleAddActivity}
             >
               <img src="/images/activity-empty-state.svg" alt="Empty state" />
