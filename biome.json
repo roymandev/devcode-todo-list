@@ -21,6 +21,12 @@
             "functions": ["cn"]
           }
         }
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "info"
+      },
+      "a11y": {
+        "useSemanticElements": "info"
       }
     }
   },
