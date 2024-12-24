@@ -1,3 +1,4 @@
 {
-  "generatedRouteTree": "./routeTree.gen.ts"
+  "generatedRouteTree": "./routeTree.gen.ts",
+  "autoCodeSplitting": true
 }
