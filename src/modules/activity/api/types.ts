@@ -20,3 +20,15 @@ export type ResCreateActivity = {
   title: string;
   email: string;
 };
+
+export type ResGetActivityDetail = {
+  id: number;
+  title: string;
+  created_at: string;
+  todo_items: [];
+};
+
+export type PayloadUpdateActivity = {
+  id: number;
+  title: string;
+};
