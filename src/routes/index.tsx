@@ -70,9 +70,9 @@ function HomePage() {
             </Button>
           ) : (
             <div className="grid grid-cols-4 gap-x-5 gap-y-6">
-              {data.map((activity, index) => (
+              {data.map((activity) => (
                 <Link
-                  data-cy={`activity-item-${index}`}
+                  data-cy="activity-item"
                   key={activity.id}
                   to="/activity/$id"
                   params={{
