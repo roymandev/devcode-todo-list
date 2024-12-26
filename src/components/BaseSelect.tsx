@@ -12,6 +12,9 @@ type Props<T extends Option> = {
   itemProps?: (option: T) => {
     'data-cy'?: string;
   };
+  valueProps?: (option: T) => {
+    'data-cy'?: string;
+  };
   renderItem?: (option: T) => React.ReactNode;
   placeholder?: string;
   value?: string;
@@ -22,6 +25,7 @@ const BaseSelect = <T extends Option>({
   options,
   className,
   itemProps,
+  valueProps,
   renderItem,
   placeholder,
   onChange,
@@ -60,7 +64,11 @@ const BaseSelect = <T extends Option>({
         {...rest}
       >
         {
-          <Select.Value placeholder={placeholder} asChild>
+          <Select.Value
+            placeholder={placeholder}
+            asChild
+            {...(selectedOption ? valueProps?.(selectedOption) : {})}
+          >
             {selectedOption ? renderItem?.(selectedOption) : ''}
           </Select.Value>
         }

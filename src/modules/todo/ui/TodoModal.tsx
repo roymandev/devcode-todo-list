@@ -47,7 +47,7 @@ const TodoModal = ({ open, onOpenChange, initialValues, onSave }: Props) => {
         <Dialog.Content
           data-cy="modal-add"
           aria-description="Todo modal"
-          className="relative mx-auto max-w-2xl rounded-xl bg-white"
+          className="!pointer-events-auto relative mx-auto max-w-2xl rounded-xl bg-white"
         >
           <header className="flex min-h-[70px] items-center border-gray-200 border-b px-7">
             <Dialog.Title
@@ -98,6 +98,9 @@ const TodoModal = ({ open, onOpenChange, initialValues, onSave }: Props) => {
                 data-cy="modal-add-priority-dropdown"
                 value={priority}
                 onChange={setPriority}
+                valueProps={() => ({
+                  'data-cy': 'modal-add-priority-item',
+                })}
                 itemProps={(option) => ({
                   'data-cy': `modal-add-priority-${option.value}`,
                 })}
