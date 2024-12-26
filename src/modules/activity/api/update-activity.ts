@@ -28,7 +28,6 @@ export const mutateUpdateActivity = mutationOptions({
     Query.setQueriesData<ResGetActivityList>(
       { queryKey: QUERY_KEYS.lists() },
       (prev) => {
-        console.log(prev);
         return (
           prev && {
             ...prev,
@@ -62,8 +61,6 @@ export const mutateUpdateActivity = mutationOptions({
     return { prevActivitiesList, prevActivityDetail };
   },
   onError: (_err, payload, context) => {
-    console.log(_err);
-
     // Rollback list
     Query.setQueriesData(
       { queryKey: QUERY_KEYS.lists() },

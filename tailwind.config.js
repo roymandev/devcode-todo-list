@@ -29,5 +29,5 @@ export default {
       purple: '#8942C1',
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 };

@@ -34,9 +34,9 @@ export const PageTitleEditable = ({ onFinish, children, ...rest }: Props) => {
       {editMode ? (
         <input
           ref={inputRef}
-          className="mt-px flex-1 border-gray-500 border-b bg-transparent font-bold text-4xl outline-none"
+          className="mt-px flex-1 border-0 border-b bg-transparent p-0 font-bold text-4xl focus:border-gray-500 focus:outline-none focus:ring-0"
           value={value || ''}
-          onChange={(e) => setValue(e.currentTarget.value)}
+          onChange={(e) => setValue(e.target.value)}
           onBlur={handleOnBlur}
         />
       ) : (

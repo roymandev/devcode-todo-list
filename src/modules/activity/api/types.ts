@@ -1,3 +1,5 @@
+import type { TodoPriority } from '../../todo/contant/options';
+
 export type ResGetActivityList = {
   total: number;
   limit: number;
@@ -25,7 +27,13 @@ export type ResGetActivityDetail = {
   id: number;
   title: string;
   created_at: string;
-  todo_items: [];
+  todo_items: {
+    id: number;
+    title: string;
+    activity_group_id: number;
+    is_active: boolean;
+    priority: TodoPriority;
+  }[];
 };
 
 export type PayloadUpdateActivity = {
