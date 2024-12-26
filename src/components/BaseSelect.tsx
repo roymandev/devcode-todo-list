@@ -64,12 +64,13 @@ const BaseSelect = <T extends Option>({
         {...rest}
       >
         {
-          <Select.Value
-            placeholder={placeholder}
-            asChild
-            {...(selectedOption ? valueProps?.(selectedOption) : {})}
-          >
-            {selectedOption ? renderItem?.(selectedOption) : ''}
+          <Select.Value placeholder={placeholder} asChild>
+            <div
+              {...(selectedOption ? valueProps?.(selectedOption) : {})}
+              className="!pointer-events-auto flex items-center"
+            >
+              {selectedOption ? renderItem?.(selectedOption) : ''}
+            </div>
           </Select.Value>
         }
         <Select.Icon asChild>
