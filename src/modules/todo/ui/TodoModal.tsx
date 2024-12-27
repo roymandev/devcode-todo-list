@@ -47,7 +47,7 @@ const TodoModal = ({ open, onOpenChange, initialValues, onSave }: Props) => {
         <Dialog.Content
           data-cy="modal-add"
           aria-description="Todo modal"
-          className="!pointer-events-auto relative mx-auto max-w-2xl rounded-xl bg-white"
+          className="!pointer-events-auto fixed w-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 mx-auto max-w-2xl rounded-xl bg-white"
         >
           <header className="flex min-h-[70px] items-center border-gray-200 border-b px-7">
             <Dialog.Title

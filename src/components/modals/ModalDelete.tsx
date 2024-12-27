@@ -1,10 +1,10 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
-import { type ReactNode, useState } from 'react';
-import { promiseHandler } from '../../libs/promise-handler';
-import { Button } from '../Button';
+import * as Dialog from "@radix-ui/react-dialog";
+import { IconAlertTriangle, IconInfoCircle } from "@tabler/icons-react";
+import { type ReactNode, useState } from "react";
+import { promiseHandler } from "../../libs/promise-handler";
+import { Button } from "../Button";
 
-type Props = Required<Pick<Dialog.DialogProps, 'open' | 'onOpenChange'>> & {
+type Props = Required<Pick<Dialog.DialogProps, "open" | "onOpenChange">> & {
   title: ReactNode;
   onApply?: () => Promise<void> | void;
   successMessage: string;
@@ -45,7 +45,7 @@ const ModalDelete = ({
           <Dialog.Content
             data-cy="modal-information"
             aria-description="Delete success information"
-            className="relative mx-auto max-w-2xl rounded-xl bg-white px-7 py-5"
+            className="fixed w-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 mx-auto max-w-2xl rounded-xl bg-white px-7 py-5"
           >
             <div className="flex gap-3">
               <IconInfoCircle
@@ -61,7 +61,7 @@ const ModalDelete = ({
           <Dialog.Content
             data-cy="modal-delete"
             aria-description="Delete confirmation modal"
-            className="relative mx-auto max-w-2xl rounded-xl bg-white p-12"
+            className="fixed w-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 mx-auto max-w-2xl rounded-xl bg-white p-12"
           >
             <div>
               <IconAlertTriangle
