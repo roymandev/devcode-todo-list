@@ -1,11 +1,11 @@
-import { IconPencil, IconTrash } from '@tabler/icons-react';
-import { Button } from '../../../components/Button';
-import { cn } from '../../../libs/cn';
-import type { ResGetActivityDetail } from '../../../modules/activity/api/types';
-import PriorityDot from '../../../modules/todo/ui/PriorityDot';
+import { IconPencil, IconTrash } from "@tabler/icons-react";
+import { Button } from "../../../components/Button";
+import { cn } from "../../../libs/cn";
+import type { ResGetActivityDetail } from "../../../modules/activity/api/types";
+import PriorityDot from "../../../modules/todo/ui/PriorityDot";
 
 type Props = {
-  todo: ResGetActivityDetail['todo_items'][number];
+  todo: ResGetActivityDetail["todo_items"][number];
   onToggleCheck: (todoId: number, is_active: boolean) => void;
   onClickEdit: () => void;
 };
@@ -21,8 +21,8 @@ const TodoItem = ({ todo, onToggleCheck, onClickEdit, ...rest }: Props) => {
         data-cy="todo-item-checkbox"
         type="checkbox"
         className="size-5 border-gray-300 text-primary"
-        checked={todo.is_active}
-        onChange={(e) => onToggleCheck(todo.id, e.target.checked)}
+        checked={!todo.is_active}
+        onChange={(e) => onToggleCheck(todo.id, !e.target.checked)}
       />
       <PriorityDot
         data-cy="todo-item-priority-indicator"
@@ -32,8 +32,8 @@ const TodoItem = ({ todo, onToggleCheck, onClickEdit, ...rest }: Props) => {
       <h4
         data-cy="todo-item-title"
         className={cn(
-          'ml-4 font-semibold text-lg',
-          !todo.is_active && 'text-gray-600 line-through',
+          "ml-4 font-semibold text-lg",
+          !todo.is_active && "text-gray-600 line-through"
         )}
       >
         {todo.title}

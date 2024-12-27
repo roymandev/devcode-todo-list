@@ -1,9 +1,9 @@
-import { API } from '../../../libs/api';
-import { mutationOptions } from '../../../libs/mutate-options';
-import { Query } from '../../../libs/query';
-import { ACTIVITY_QUERY_KEYS } from '../../activity';
-import type { ResGetActivityDetail } from '../../activity/api/types';
-import type { PayloadUpdateTodo, ResUpdateTodo } from './types';
+import { API } from "../../../libs/api";
+import { mutationOptions } from "../../../libs/mutate-options";
+import { Query } from "../../../libs/query";
+import { ACTIVITY_QUERY_KEYS } from "../../activity";
+import type { ResGetActivityDetail } from "../../activity/api/types";
+import type { PayloadUpdateTodo, ResUpdateTodo } from "./types";
 
 export const apiUpdateTodo = ({
   id,
@@ -22,7 +22,7 @@ export const mutateUpdateTodo = mutationOptions({
     });
 
     const prevActivityDetail = Query.getQueryData<ResGetActivityDetail>(
-      ACTIVITY_QUERY_KEYS.detail(payload.activity_group_id),
+      ACTIVITY_QUERY_KEYS.detail(payload.activity_group_id)
     );
 
     Query.setQueryData<ResGetActivityDetail>(
@@ -31,9 +31,9 @@ export const mutateUpdateTodo = mutationOptions({
         prev && {
           ...prev,
           todo_items: prev.todo_items.map((todo) =>
-            todo.id === payload.id ? { ...todo, ...payload } : todo,
+            todo.id === payload.id ? { ...todo, ...payload } : todo
           ),
-        },
+        }
     );
 
     return { prevActivityDetail };
@@ -41,12 +41,7 @@ export const mutateUpdateTodo = mutationOptions({
   onError: (_err, payload, context) => {
     Query.setQueryData(
       ACTIVITY_QUERY_KEYS.detail(payload.activity_group_id),
-      context?.prevActivityDetail,
+      context?.prevActivityDetail
     );
-  },
-  onSettled: (_data, _err, payload) => {
-    Query.invalidateQueries({
-      queryKey: ACTIVITY_QUERY_KEYS.detail(payload.activity_group_id),
-    });
   },
 });

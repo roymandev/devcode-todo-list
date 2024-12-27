@@ -1,23 +1,26 @@
-import { IconChevronLeft, IconPlus } from '@tabler/icons-react';
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { Link, createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
-import { Button } from '../../components/Button';
-import { Query } from '../../libs/query';
-import { queryActivityDetail } from '../../modules/activity/api/activity-detail';
-import type { ResGetActivityDetail } from '../../modules/activity/api/types';
-import { mutateUpdateActivity } from '../../modules/activity/api/update-activity';
-import { mutateCreateTodo } from '../../modules/todo/api/create-todo';
-import { mutateUpdateTodo } from '../../modules/todo/api/update-todo';
+import { IconChevronLeft, IconPlus } from "@tabler/icons-react";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
+import { Button } from "../../components/Button";
+import { Query } from "../../libs/query";
+import { queryActivityDetail } from "../../modules/activity/api/activity-detail";
+import type { ResGetActivityDetail } from "../../modules/activity/api/types";
+import { mutateUpdateActivity } from "../../modules/activity/api/update-activity";
+import { mutateCreateTodo } from "../../modules/todo/api/create-todo";
+import { mutateUpdateTodo } from "../../modules/todo/api/update-todo";
 import TodoModal, {
   type TodoModalValues,
-} from '../../modules/todo/ui/TodoModal';
-import { PageTitleEditable } from './-components/PageTitleEditable';
-import TodoItem from './-components/TodoItem';
+} from "../../modules/todo/ui/TodoModal";
+import { PageTitleEditable } from "./-components/PageTitleEditable";
+import TodoItem from "./-components/TodoItem";
+import SortButton from "../../modules/todo/ui/SortButton";
+import { todoSort } from "../../modules/todo/lib/todo-sort";
+import { TodoSort } from "../../modules/todo/contant/options";
 
-type InitialTodoValues = ResGetActivityDetail['todo_items'][number];
+type InitialTodoValues = ResGetActivityDetail["todo_items"][number];
 
-export const Route = createFileRoute('/activity/$id')({
+export const Route = createFileRoute("/activity/$id")({
   component: RouteComponent,
   loader: ({ params }) =>
     Query.ensureQueryData(queryActivityDetail(Number(params.id))),
@@ -27,13 +30,19 @@ function RouteComponent() {
   const { id } = Route.useParams();
 
   const [createTodo, setCreateTodo] = useState<InitialTodoValues | boolean>(
-    false,
+    false
   );
+  const [sort, setSort] = useState<TodoSort>("unfinished");
 
   const { data } = useSuspenseQuery(queryActivityDetail(Number(id)));
   const mutationEditActivity = useMutation(mutateUpdateActivity);
   const mutationCreateTodo = useMutation(mutateCreateTodo);
   const mutationUpdateTodo = useMutation(mutateUpdateTodo);
+
+  const todos = useMemo(
+    () => todoSort(data.todo_items, sort),
+    [data.todo_items, sort]
+  );
 
   const handleEditActivity = (title: string) => {
     mutationEditActivity.mutate({ id: Number(id), title });
@@ -54,7 +63,7 @@ function RouteComponent() {
   const handleSaveTodo = async (values: TodoModalValues) => {
     if (!createTodo) return;
 
-    if (typeof createTodo === 'object') {
+    if (typeof createTodo === "object") {
       // Edit
       mutationUpdateTodo.mutate({
         ...createTodo,
@@ -88,9 +97,10 @@ function RouteComponent() {
               {data.title}
             </PageTitleEditable>
 
+            <SortButton data-cy="todo-sort-button" onChange={setSort} />
+
             <Button
               data-cy="todo-add-button"
-              className="ml-auto"
               leftIcon={<IconPlus size={24} />}
               onClick={handleAddTodo}
             >
@@ -98,9 +108,9 @@ function RouteComponent() {
             </Button>
           </header>
 
-          {data.todo_items.length ? (
+          {todos.length ? (
             <ul className="space-y-3">
-              {data.todo_items.map((todo, index) => (
+              {todos.map((todo, index) => (
                 <TodoItem
                   data-cy={`todo-item-${index}`}
                   key={todo.id}
@@ -126,7 +136,7 @@ function RouteComponent() {
       <TodoModal
         open={!!createTodo}
         onOpenChange={() => setCreateTodo(false)}
-        initialValues={typeof createTodo === 'object' ? createTodo : null}
+        initialValues={typeof createTodo === "object" ? createTodo : null}
         onSave={handleSaveTodo}
       />
     </>
