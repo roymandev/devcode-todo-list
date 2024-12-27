@@ -1,4 +1,4 @@
-import type { TodoPriority } from '../contant/options';
+import type { TodoPriority } from "../contant/options";
 
 export type PayloadCreateTodo = {
   activity_group_id: number;
@@ -30,4 +30,9 @@ export type ResUpdateTodo = {
   priority: TodoPriority;
   created_at: string;
   updated_at: string;
+};
+
+export type PayloadApiRemoveTodo = {
+  id: number;
+  activity_group_id: number;
 };

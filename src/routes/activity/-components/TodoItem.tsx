@@ -8,9 +8,16 @@ type Props = {
   todo: ResGetActivityDetail["todo_items"][number];
   onToggleCheck: (todoId: number, is_active: boolean) => void;
   onClickEdit: () => void;
+  onClickDelete: () => void;
 };
 
-const TodoItem = ({ todo, onToggleCheck, onClickEdit, ...rest }: Props) => {
+const TodoItem = ({
+  todo,
+  onToggleCheck,
+  onClickEdit,
+  onClickDelete,
+  ...rest
+}: Props) => {
   return (
     <li
       key={todo.id}
@@ -52,6 +59,7 @@ const TodoItem = ({ todo, onToggleCheck, onClickEdit, ...rest }: Props) => {
         data-cy="todo-item-delete-button"
         variant="unstyled"
         className="ml-auto p-1 text-gray-600"
+        onClick={onClickDelete}
       >
         <IconTrash />
       </Button>

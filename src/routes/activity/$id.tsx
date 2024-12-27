@@ -17,6 +17,8 @@ import TodoItem from "./-components/TodoItem";
 import SortButton from "../../modules/todo/ui/SortButton";
 import { todoSort } from "../../modules/todo/lib/todo-sort";
 import { TodoSort } from "../../modules/todo/contant/options";
+import ModalDelete from "../../components/modals/ModalDelete";
+import { mutateRemoveTodo } from "../../modules/todo/api/remove-todo";
 
 type InitialTodoValues = ResGetActivityDetail["todo_items"][number];
 
@@ -32,12 +34,15 @@ function RouteComponent() {
   const [createTodo, setCreateTodo] = useState<InitialTodoValues | boolean>(
     false
   );
+  const [deleteTodo, setDeleteTodo] = useState<InitialTodoValues | null>(null);
+
   const [sort, setSort] = useState<TodoSort>("latest");
 
   const { data } = useSuspenseQuery(queryActivityDetail(Number(id)));
   const mutationEditActivity = useMutation(mutateUpdateActivity);
   const mutationCreateTodo = useMutation(mutateCreateTodo);
   const mutationUpdateTodo = useMutation(mutateUpdateTodo);
+  const mutationRemoveTodo = useMutation(mutateRemoveTodo);
 
   const todos = useMemo(
     () => todoSort(data.todo_items, sort),
@@ -81,6 +86,13 @@ function RouteComponent() {
     setCreateTodo(false);
   };
 
+  const handleDeleteTodo = setDeleteTodo;
+
+  const handleApplyDeleteTodo = async () => {
+    if (!deleteTodo) return;
+    mutationRemoveTodo.mutate(deleteTodo);
+  };
+
   return (
     <>
       <main className="container">
@@ -117,6 +129,7 @@ function RouteComponent() {
                   todo={todo}
                   onToggleCheck={handleToggleCheck}
                   onClickEdit={() => handleEditTodo(todo)}
+                  onClickDelete={() => handleDeleteTodo(todo)}
                 />
               ))}
             </ul>
@@ -138,6 +151,19 @@ function RouteComponent() {
         onOpenChange={() => setCreateTodo(false)}
         initialValues={typeof createTodo === "object" ? createTodo : null}
         onSave={handleSaveTodo}
+      />
+
+      <ModalDelete
+        open={!!deleteTodo}
+        onOpenChange={() => setDeleteTodo(null)}
+        title={
+          <>
+            Apakah anda yakin menghapus List Item
+            <br />
+            <b>“{deleteTodo?.title}”?</b>
+          </>
+        }
+        onApply={handleApplyDeleteTodo}
       />
     </>
   );

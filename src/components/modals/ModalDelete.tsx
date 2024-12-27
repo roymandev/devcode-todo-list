@@ -7,7 +7,7 @@ import { Button } from "../Button";
 type Props = Required<Pick<Dialog.DialogProps, "open" | "onOpenChange">> & {
   title: ReactNode;
   onApply?: () => Promise<void> | void;
-  successMessage: string;
+  successMessage?: string;
 };
 
 const ModalDelete = ({
@@ -29,7 +29,12 @@ const ModalDelete = ({
 
     setLoading(false);
 
-    if (!error) setSuccess(true);
+    if (error) return;
+    if (successMessage) {
+      setSuccess(true);
+    } else {
+      handleClose();
+    }
   };
 
   const handleClose = () => {
@@ -41,7 +46,7 @@ const ModalDelete = ({
     <Dialog.Root open={open} onOpenChange={handleClose}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 flex bg-black/60" />
-        {success ? (
+        {successMessage && success ? (
           <Dialog.Content
             data-cy="modal-information"
             aria-description="Delete success information"
