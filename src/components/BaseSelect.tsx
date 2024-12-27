@@ -1,8 +1,8 @@
-import * as Select from '@radix-ui/react-select';
-import { IconCheck, IconChevronDown } from '@tabler/icons-react';
-import { useMemo, useState } from 'react';
-import { useUncontrolled } from '../hooks/useUncontrolled';
-import { cn } from '../libs/cn';
+import * as Select from "@radix-ui/react-select";
+import { IconCheck, IconChevronDown } from "@tabler/icons-react";
+import { useMemo, useState } from "react";
+import { useUncontrolled } from "../hooks/useUncontrolled";
+import { cn } from "../libs/cn";
 
 type Option = string | { label?: string; value: string };
 
@@ -10,10 +10,7 @@ type Props<T extends Option> = {
   options: T[];
   className?: string;
   itemProps?: (option: T) => {
-    'data-cy'?: string;
-  };
-  valueProps?: (option: T) => {
-    'data-cy'?: string;
+    "data-cy"?: string;
   };
   renderItem?: (option: T) => React.ReactNode;
   placeholder?: string;
@@ -25,7 +22,6 @@ const BaseSelect = <T extends Option>({
   options,
   className,
   itemProps,
-  valueProps,
   renderItem,
   placeholder,
   onChange,
@@ -41,12 +37,12 @@ const BaseSelect = <T extends Option>({
   const selectedOption = useMemo(
     () =>
       options.find((option) => {
-        if (typeof option === 'object') {
+        if (typeof option === "object") {
           return option.value === _value;
         }
         return option === _value;
       }),
-    [_value, options],
+    [_value, options]
   );
 
   return (
@@ -58,19 +54,14 @@ const BaseSelect = <T extends Option>({
     >
       <Select.Trigger
         className={cn(
-          'group flex min-w-52 items-center rounded-md border border-gray-200 px-4 py-3 data-[state=open]:rounded-b-none data-[state=open]:bg-gray-100',
-          className,
+          "group flex min-w-52 items-center rounded-md border border-gray-200 px-4 py-3 data-[state=open]:rounded-b-none data-[state=open]:bg-gray-100",
+          className
         )}
         {...rest}
       >
         {
           <Select.Value placeholder={placeholder} asChild>
-            <div
-              {...(selectedOption ? valueProps?.(selectedOption) : {})}
-              className="!pointer-events-auto flex items-center"
-            >
-              {selectedOption ? renderItem?.(selectedOption) : ''}
-            </div>
+            {selectedOption ? renderItem?.(selectedOption) : ""}
           </Select.Value>
         }
         <Select.Icon asChild>
@@ -88,7 +79,7 @@ const BaseSelect = <T extends Option>({
               let value = option as string;
               let label = option as string;
 
-              if (typeof option === 'object') {
+              if (typeof option === "object") {
                 value = option.value;
                 label = option.label || option.value;
               }
@@ -105,7 +96,7 @@ const BaseSelect = <T extends Option>({
 
                   <Select.ItemText
                     asChild
-                    className={cn(renderItem && 'hidden')}
+                    className={cn(renderItem && "hidden")}
                   >
                     {label}
                   </Select.ItemText>

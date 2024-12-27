@@ -1,14 +1,14 @@
-import * as Dialog from '@radix-ui/react-dialog';
-import { IconX } from '@tabler/icons-react';
-import { useEffect, useState } from 'react';
-import { Button } from '../../../components/Button';
-import type { PayloadCreateTodo } from '../api/types';
-import type { TodoPriority } from '../contant/options';
-import PrioritySelect from './PrioritySelect';
+import * as Dialog from "@radix-ui/react-dialog";
+import { IconX } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
+import { Button } from "../../../components/Button";
+import type { PayloadCreateTodo } from "../api/types";
+import type { TodoPriority } from "../contant/options";
+import PrioritySelect from "./PrioritySelect";
 
-export type TodoModalValues = Pick<PayloadCreateTodo, 'title' | 'priority'>;
+export type TodoModalValues = Pick<PayloadCreateTodo, "title" | "priority">;
 
-type Props = Required<Pick<Dialog.DialogProps, 'open' | 'onOpenChange'>> & {
+type Props = Required<Pick<Dialog.DialogProps, "open" | "onOpenChange">> & {
   onSave?: (values: TodoModalValues) => Promise<void> | void;
   initialValues?: Partial<PayloadCreateTodo> | null;
 };
@@ -16,8 +16,8 @@ type Props = Required<Pick<Dialog.DialogProps, 'open' | 'onOpenChange'>> & {
 const TodoModal = ({ open, onOpenChange, initialValues, onSave }: Props) => {
   const [loading, setLoading] = useState(false);
 
-  const [title, setTitle] = useState('');
-  const [priority, setPriority] = useState<TodoPriority>('very-high');
+  const [title, setTitle] = useState("");
+  const [priority, setPriority] = useState<TodoPriority>("very-high");
 
   const handleClose = () => {
     onOpenChange(false);
@@ -25,8 +25,8 @@ const TodoModal = ({ open, onOpenChange, initialValues, onSave }: Props) => {
 
   useEffect(() => {
     if (open) {
-      setTitle(initialValues?.title || '');
-      setPriority(initialValues?.priority || 'very-high');
+      setTitle(initialValues?.title || "");
+      setPriority(initialValues?.priority || "very-high");
     }
   }, [open]);
 
@@ -98,11 +98,8 @@ const TodoModal = ({ open, onOpenChange, initialValues, onSave }: Props) => {
                 data-cy="modal-add-priority-dropdown"
                 value={priority}
                 onChange={setPriority}
-                valueProps={() => ({
-                  'data-cy': 'modal-add-priority-item',
-                })}
                 itemProps={(option) => ({
-                  'data-cy': `modal-add-priority-${option.value}`,
+                  "data-cy": "modal-add-priority-item",
                 })}
                 className="mt-2"
               />
