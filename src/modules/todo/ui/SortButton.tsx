@@ -33,7 +33,7 @@ const SortButton = ({ onChange, ...rest }: Props) => {
         {selected?.icon}
       </ListboxButton>
       <ListboxOptions
-        data-cy="sort-parent"
+        data-cy="sort-selection"
         anchor="bottom"
         className="bg-white rounded-md shadow-lg border border-gray-200 min-w-60"
       >
