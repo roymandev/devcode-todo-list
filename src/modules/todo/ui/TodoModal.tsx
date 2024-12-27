@@ -98,7 +98,7 @@ const TodoModal = ({ open, onOpenChange, initialValues, onSave }: Props) => {
                 data-cy="modal-add-priority-dropdown"
                 value={priority}
                 onChange={setPriority}
-                itemProps={(option) => ({
+                itemProps={() => ({
                   "data-cy": "modal-add-priority-item",
                 })}
                 className="mt-2"
