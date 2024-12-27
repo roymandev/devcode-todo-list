@@ -32,7 +32,7 @@ function RouteComponent() {
   const [createTodo, setCreateTodo] = useState<InitialTodoValues | boolean>(
     false
   );
-  const [sort, setSort] = useState<TodoSort>("unfinished");
+  const [sort, setSort] = useState<TodoSort>("latest");
 
   const { data } = useSuspenseQuery(queryActivityDetail(Number(id)));
   const mutationEditActivity = useMutation(mutateUpdateActivity);

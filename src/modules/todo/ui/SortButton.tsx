@@ -16,7 +16,7 @@ type Props = {
 const SortButton = ({ onChange, ...rest }: Props) => {
   const [_value, handleChange] = useUncontrolled<TodoSort>({
     onChange,
-    defaultValue: "unfinished",
+    defaultValue: "latest",
   });
 
   const selected = useMemo(
@@ -33,13 +33,13 @@ const SortButton = ({ onChange, ...rest }: Props) => {
         {selected?.icon}
       </ListboxButton>
       <ListboxOptions
-        data-cy="sort-selection"
+        data-cy="sort-parent"
         anchor="bottom"
         className="bg-white rounded-md shadow-lg border border-gray-200 min-w-60"
       >
         {TODO_SORT_OPTIONS.map((sort) => (
           <ListboxOption
-            data-cy={`sort-${sort.value}`}
+            data-cy="sort-selection"
             key={sort.label}
             value={sort.value}
             className="flex h-[52px] items-center px-5 group gap-4 text-gray-700"
