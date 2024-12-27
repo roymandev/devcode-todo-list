@@ -164,6 +164,7 @@ function RouteComponent() {
           </>
         }
         onApply={handleApplyDeleteTodo}
+        successMessage="List Item berhasil dihapus"
       />
     </>
   );
