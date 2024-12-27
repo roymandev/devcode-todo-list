@@ -6,10 +6,10 @@ export const todoSort = (
   sort: TodoSort
 ) => {
   if (sort === "latest") {
-    return todos.sort((a, b) => a.id - b.id);
+    return todos.sort((a, b) => b.id - a.id);
   }
   if (sort === "oldest") {
-    return todos.sort((a, b) => b.id - a.id);
+    return todos.sort((a, b) => a.id - b.id);
   }
   if (sort === "az") {
     return todos.sort((a, b) => a.title.localeCompare(b.title));
